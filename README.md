@@ -100,13 +100,53 @@ A aplicação segue a **Arquitetura Hexagonal (Ports and Adapters)**, isolando a
 ```text
 .
 ├── README.md
-├── backend/             # API Node.js / TypeScript (núcleo hexagonal + adaptadores)
-└── frontend/            # Aplicação web React / TypeScript (SPA)
+├── backend/                          # API Node.js / TypeScript (Arquitetura Hexagonal)
+│   └── src/
+│       ├── core/
+│       │   ├── domain/               # Entidades (Usuario, Turma, Matricula, Nota) e DomainError
+│       │   ├── ports/
+│       │   │   ├── in/               # Input Ports (contratos dos casos de uso)
+│       │   │   └── out/              # Output Ports (contratos de repositórios e auth)
+│       │   └── usecases/             # Implementações dos casos de uso
+│       ├── adapters/
+│       │   ├── inbound/http/         # Rotas REST, middleware RBAC e tratador de erros
+│       │   └── outbound/             # Persistência SQL (SQLite/PostgreSQL) e JWT/bcrypt
+│       └── main/                     # Composição de dependências (app.ts) e servidor
+└── frontend/                         # Aplicação web React / TypeScript (Vite SPA)
+    └── src/
+        ├── components/               # Layout principal e guarda de rotas por perfil
+        ├── contexts/                 # Contexto de sessão e autenticação
+        ├── pages/                    # Telas separadas por perfil (admin, professor, aluno)
+        └── services/                 # Cliente HTTP com envio automático de Bearer JWT
 ```
 
 ## Como executar
 
-_A preencher quando a implementação inicial de `backend/` e `frontend/` estiver no repositório (entrega de 01/12 a 08/12)._
+Pré-requisitos: **Node.js 20+** e **npm**. Por padrão em desenvolvimento, a API utiliza **SQLite** automaticamente (sem necessidade de subir banco externo), podendo alternar para **PostgreSQL** via `.env`.
+
+### 1. Backend (API — porta `3333`)
+
+```bash
+cd backend
+cp .env.example .env
+npm install
+npm run dev
+```
+
+Teste de saúde da API: `GET http://localhost:3333/health`
+
+### 2. Frontend (SPA — porta `5173`)
+
+Em outro terminal:
+
+```bash
+cd frontend
+cp .env.example .env
+npm install
+npm run dev
+```
+
+Acesse no navegador: `http://localhost:5173`
 
 ## Cronograma
 
