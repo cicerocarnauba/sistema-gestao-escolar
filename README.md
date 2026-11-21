@@ -1,17 +1,17 @@
 # Sistema de Gestão Escolar
 
-Trabalho Final da disciplina **Arquitetura de Software** — Universidade Federal do Ceará (UFC).
+Trabalho Final da disciplina **Arquitetura de Software (2026.2)** — Universidade Federal do Ceará (UFC) — **Equipe 5**.
 
 Aplicação web para a rotina acadêmica de uma instituição de ensino, projetada segundo a **Arquitetura Hexagonal (Ports and Adapters)** e documentada com o **modelo C4 (Structurizr)**.
 
 - **Domínio sorteado:** Tema 7 — Sistema de Gestão Escolar
-- **Estilo arquitetural:** Arquitetura Hexagonal
+- **Estilo arquitetural:** Arquitetura Hexagonal (Ports and Adapters)
 
 ## Equipe
 
 | Integrante | Matrícula | Responsabilidade principal |
 |---|---|---|
-| Cícero Higor de Medeiros Carnauba | 574228 | Documento de visão (estruturação e revisão) |
+| Cícero Higor de Medeiros Carnaúba | 574228 | Documento de visão (estruturação e revisão) |
 | Emilly Wictoria Pinheiro Ferreira | 567253 | Documento de funcionalidades |
 | Gabriel Ribeiro de Sousa | 567908 | Diagrama de Container e documento de entrega (decisão arquitetural) |
 | Kawan Torres Lopes | 563869 | Diagramas |
@@ -22,88 +22,91 @@ Aplicação web para a rotina acadêmica de uma instituição de ensino, projeta
 
 ## Sobre o sistema
 
-O foco é o fluxo básico entre secretaria, professores e alunos: cadastro de usuários, abertura de turmas, matrícula de alunos e lançamento de notas com consulta de boletim.
+O foco é centralizar o fluxo acadêmico básico entre secretaria, professores e alunos: cadastro de usuários, criação de turmas, efetivação de matrículas, lançamento de notas e consulta de boletim escolar.
 
 ### Perfis de acesso
 
 | Perfil | Pode | Restrições |
 |---|---|---|
-| **Administrador** (`ADMIN`) | Cadastrar alunos e professores, criar turmas (disciplina, período letivo e professor) e matricular alunos | Não lança notas |
-| **Professor** (`PROFESSOR`) | Ver suas turmas e lançar/editar notas dos alunos matriculados | Não cria turmas, não cadastra usuários e não acessa turmas de outros professores |
-| **Aluno** (`ALUNO`) | Consultar suas turmas e o boletim (notas e média) | Somente leitura dos próprios dados |
+| **Administrador** (`ADMIN`) | Cadastrar alunos e professores, criar turmas (código, disciplina, período letivo e professor titular), matricular alunos e listar registros | Não realiza lançamento de notas |
+| **Professor** (`PROFESSOR`) | Consultar suas turmas vinculadas com lista de alunos matriculados e lançar/editar notas | Não cria turmas, não cadastra usuários e não acessa turmas de outros professores |
+| **Aluno** (`ALUNO`) | Consultar suas turmas ativas e visualizar o boletim (notas, média e situação) | Acesso somente leitura aos próprios dados |
 
-### Funcionalidades
+### Funcionalidades (Requisitos Funcionais)
 
 | ID | Funcionalidade | Perfil |
 |---|---|---|
-| RF01 | Login e controle de acesso (e-mail e senha, token JWT com o perfil) | Todos |
-| RF02 | Cadastro de alunos e professores | Administrador |
-| RF03 | Criação e listagem de turmas | Administrador |
-| RF04 | Matrícula de alunos | Administrador |
-| RF05 | Lançamento de notas | Professor |
-| RF06 | Consulta de boletim | Aluno |
+| RF01 | Autenticação de Usuário (Login via e-mail/matrícula e senha com token JWT) | Todos |
+| RF02 | Autorização por Perfil (restrição de rotas e casos de uso por papel) | Todos |
+| RF03 | Cadastrar Usuários (Alunos e Professores) | Administrador |
+| RF04 | Cadastrar Turma (código, disciplina, período letivo e professor responsável) | Administrador |
+| RF05 | Matricular Aluno em Turma | Administrador |
+| RF06 | Listar Alunos, Professores e Turmas | Administrador |
+| RF07 | Listar Turmas Vinculadas (com alunos matriculados) | Professor |
+| RF08 | Lançar e Editar Notas | Professor |
+| RF09 | Consultar Turmas Matriculadas | Aluno |
+| RF10 | Visualizar Boletim Acadêmico (notas, média e situação) | Aluno |
 
 ### Regras de negócio
 
-- **Faixa de notas:** toda nota deve estar entre 0 e 10.
-- **Vínculo do professor:** só lança ou altera notas em turmas em que é o professor responsável.
-- **Matrícula única:** um aluno não pode ser matriculado duas vezes na mesma turma.
-- **Nota só para matriculados:** é necessário haver matrícula ativa do aluno na turma.
-- **Situação no boletim:** média das notas da turma; *Em curso*, *Aprovado* (média ≥ 7,0) ou *Reprovado* (média < 7,0).
+- **RN01 — Intervalo válido de notas:** toda nota deve estar entre `0,0` e `10,0`.
+- **RN02 — Vínculo obrigatório do professor:** apenas o professor titular da turma pode lançar ou alterar notas daquela turma.
+- **RN03 — Unicidade de matrícula:** um aluno não pode ser matriculado mais de uma vez na mesma turma e período letivo.
+- **RN04 — Pré-requisito de matrícula para nota:** só é permitido lançar notas para alunos com matrícula ativa na turma.
+- **RN05 — Cálculo de situação no boletim:** *Aprovado* (média ≥ 7,0), *Reprovado* (média < 7,0) ou *Em andamento* (sem notas lançadas).
 
 ### Fluxos principais
 
-1. Administrador: login → cria turma vinculada a um professor → matricula um aluno.
-2. Professor: login → abre turma sob sua responsabilidade → lança a nota do aluno.
-3. Aluno: login → abre o boletim → vê nota, média e situação.
+1. **Administrador:** login → cadastra professor e aluno → cria turma vinculada ao professor → matricula o aluno na turma.
+2. **Professor:** login → consulta suas turmas vinculadas → abre a turma e lança a nota do aluno matriculado.
+3. **Aluno:** login → acessa o boletim acadêmico → visualiza nota, média e situação na disciplina.
 
 ## Arquitetura
 
-A aplicação segue a Arquitetura Hexagonal, isolando as regras acadêmicas de frameworks e do banco de dados.
+A aplicação segue a **Arquitetura Hexagonal (Ports and Adapters)**, isolando as regras acadêmicas de frameworks e do banco de dados.
 
-- **Domínio (núcleo):** entidades e regras de negócio (Aluno, Professor, Turma, Disciplina, Matrícula, Nota), sem dependência de framework ou driver de banco.
-- **Portas de entrada (driving):** contratos dos casos de uso, por exemplo `MatricularAlunoUseCase`, `LancarNotaUseCase`, `ConsultarBoletimUseCase`, acionados por adaptadores primários (controladores REST).
-- **Portas de saída (driven):** interfaces de persistência e integração, por exemplo `AlunoRepository`, `TurmaRepository`, `NotaRepository`, implementadas por adaptadores secundários (banco relacional).
+- **Domínio (núcleo):** entidades e invariantes de negócio (`Aluno`, `Professor`, `Turma`, `Matrícula`, `Nota`), sem dependência de framework web ou driver de banco.
+- **Portas de entrada (Input / Driving Ports):** contratos dos casos de uso (ex.: `CriarTurmaPort`, `MatricularAlunoPort`, `LancarNotaPort`, `ConsultarBoletimPort`, `ConsultarTurmasPort`), acionados por adaptadores primários (Controllers REST).
+- **Portas de saída (Output / Driven Ports):** interfaces de persistência e autenticação (ex.: `UsuarioRepoPort`, `AuthServicePort`, `TurmaRepoPort`, `MatriculaRepoPort`, `NotaRepoPort`), implementadas por adaptadores secundários (banco relacional e serviço JWT).
 
 ### Containers (C4 — nível 2)
 
-| Container | Responsabilidade | Tecnologia |
+| Container | Tecnologia | Responsabilidade |
 |---|---|---|
-| Aplicação Web (Frontend) | Interface no navegador para os três perfis | A definir |
-| API de Gestão Escolar (Backend) | Casos de uso e regras de negócio, estruturado em hexágono | A definir (REST) |
-| Banco de Dados | Persistência de usuários, turmas, matrículas e notas | A definir (relacional) |
+| Aplicação Web (Frontend) | React / TypeScript (SPA) | Interface gráfica no navegador para os três perfis (comunicação via HTTPS/JSON) |
+| API de Gestão Escolar (Backend) | Node.js / TypeScript (REST API) | Casos de uso e regras de negócio no núcleo hexagonal + adaptadores REST e SQL |
+| Banco de Dados | PostgreSQL (ou SQLite em dev) | Persistência de usuários, perfis, turmas, matrículas e notas |
 
-### Diagramas
+### Endpoints REST previstos
 
-Os diagramas ficam na pasta [`docs/diagramas`](docs/diagramas) e o código-fonte do workspace Structurizr em [`docs/structurizr/workspace.dsl`](docs/structurizr/workspace.dsl).
+| Fluxo / RF | Endpoint | Perfil |
+|---|---|---|
+| Autenticação (RF01) | `POST /auth/login` | Público |
+| Cadastro de Usuários (RF03) | `POST /usuarios` | `ADMIN` |
+| Criação e Listagem de Turmas (RF04, RF06, RF07) | `POST /turmas` · `GET /turmas` | `ADMIN` / `PROFESSOR` |
+| Matrícula de Aluno (RF05) | `POST /matriculas` | `ADMIN` |
+| Lançamento de Notas (RF08) | `POST /notas` · `PUT /notas/:id` | `PROFESSOR` |
+| Consulta de Boletim (RF09, RF10) | `GET /boletim` | `ALUNO` |
 
-- [ ] Nível 1 — Contexto
-- [ ] Nível 2 — Containers
+### Diagramas (C4)
+
+- [x] Nível 1 — Contexto ([C1.png](https://drive.google.com/file/d/1yu138ALJhnlcqqYpGP0vzdT3wPmIysaD/view?usp=sharing))
+- [x] Nível 2 — Containers ([C2.png](https://drive.google.com/file/d/1UgPXfaxJO6yNx2u8hJ4T4mLIaPUNipiF/view?usp=sharing))
 - [ ] Nível 3 — Componentes (entrega 23 e 24/11)
 - [ ] Nível 4 — Código (entrega 23 e 24/11)
 
-### Decisões arquiteturais
-
-O documento de decisão arquitetural (justificativa da Arquitetura Hexagonal e consequências) está em [`docs/decisoes`](docs/decisoes).
-
 ## Estrutura do repositório
 
-```
+```text
 .
 ├── README.md
-├── docs/
-│   ├── decisoes/        # documento de decisões arquiteturais
-│   ├── diagramas/       # imagens exportadas dos diagramas C4
-│   └── structurizr/     # workspace.dsl
-├── backend/             # API (núcleo hexagonal + adaptadores)
-└── frontend/            # aplicação web
+├── backend/             # API Node.js / TypeScript (núcleo hexagonal + adaptadores)
+└── frontend/            # Aplicação web React / TypeScript (SPA)
 ```
-
-> Estrutura sugerida. Ajustar quando a stack for definida pela equipe.
 
 ## Como executar
 
-_A preencher quando a stack for definida e o código estiver rodando (entrega de 01/12 a 08/12)._
+_A preencher quando a implementação inicial de `backend/` e `frontend/` estiver no repositório (entrega de 01/12 a 08/12)._
 
 ## Cronograma
 
@@ -115,6 +118,4 @@ _A preencher quando a stack for definida e o código estiver rodando (entrega de
 
 ## Documentos do projeto
 
-- Visão e Definição do Aplicativo
-- Documento de Decisão Arquitetural e Visão de Containers
-- Documento de Funcionalidades
+- [Sistema de Gestão Escolar (SGE) — Documento Unificado (Visão, Funcionalidades, Decisão Arquitetural e C4)](https://docs.google.com/document/d/1CdxFBy4iiEE1bsGDHWTYpxofOFxN5htDREQ7_m_QvFA/edit)
