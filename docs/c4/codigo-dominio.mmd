@@ -1,0 +1,90 @@
+---
+title: "Code View: Sistema de Gestão Escolar - API de Gestão Escolar - Entidades e Regras de Domínio"
+---
+classDiagram
+direction TB
+
+namespace sge_api_dominio {
+  class Perfil {
+    <<enumeration>>
+    ADMIN
+    PROFESSOR
+    ALUNO
+  }
+
+  class SituacaoBoletim {
+    <<enumeration>>
+    EM_ANDAMENTO
+    APROVADO
+    REPROVADO
+  }
+
+  class Usuario {
+    <<abstract>>
+    -id: string
+    -nome: string
+    -email: string
+    -documento: string
+    -senhaHash: string
+    -perfil: Perfil
+    +possuiPerfil(perfil: Perfil) boolean
+  }
+
+  class Aluno {
+    +matricula: string
+  }
+
+  class Professor {
+  }
+
+  class Turma {
+    -id: string
+    -codigo: string
+    -disciplina: string
+    -periodoLetivo: string
+    -professorId: string
+    +professorETitular(professorId: string) boolean
+  }
+
+  class Matricula {
+    -id: string
+    -alunoId: string
+    -turmaId: string
+    -ativa: boolean
+    +estaAtiva() boolean
+    +encerrar() void
+  }
+
+  class Nota {
+    -id: string
+    -matriculaId: string
+    -valor: number
+    +criar(matriculaId: string, valor: number)$ Nota
+    +alterarValor(valor: number) void
+    -validarIntervalo(valor: number)$ void
+  }
+
+  class Boletim {
+    <<value object>>
+    +turmaId: string
+    +notas: number[]
+    +media: number
+    +situacao: SituacaoBoletim
+    +calcular(turmaId: string, notas: number[])$ Boletim
+  }
+}
+
+Usuario <|-- Aluno
+Usuario <|-- Professor
+Usuario --> Perfil : possui
+Turma "*" --> "1" Professor : tem titular
+Matricula "*" --> "1" Aluno : vincula
+Matricula "*" --> "1" Turma : vincula
+Nota "*" --> "1" Matricula : pertence a
+Boletim --> SituacaoBoletim : define
+Boletim ..> Nota : calcula média (RN05)
+
+note for Nota "RN01: valor entre 0.0 e 10.0, fora disso lança erro"
+note for Turma "RN02: só o professor titular lança ou altera notas"
+note for Matricula "RN03: aluno único por turma e período letivo. RN04: nota exige matrícula ativa"
+note for Boletim "RN05: média >= 7.0 Aprovado, < 7.0 Reprovado, sem notas Em andamento"

@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1880 780" width="1880" height="780" font-family="Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="1880" height="780" fill="#ffffff"/>
+<defs>
+      <marker id="arrowOpen" viewBox="0 0 12 12" refX="11" refY="6" markerWidth="9" markerHeight="9" orient="auto-start-reverse">
+        <path d="M 1 1 L 11 6 L 1 11" fill="none" stroke="#1168bd" stroke-width="1.7"/>
+      </marker>
+      <marker id="inheritTri" viewBox="0 0 14 14" refX="1" refY="7" markerWidth="11" markerHeight="11" orient="auto">
+        <path d="M 1 7 L 13 1 L 13 13 z" fill="#ffffff" stroke="#1168bd" stroke-width="1.6"/>
+      </marker>
+      <marker id="realizeTri" viewBox="0 0 14 14" refX="13" refY="7" markerWidth="11" markerHeight="11" orient="auto">
+        <path d="M 13 7 L 1 1 L 1 13 z" fill="#ffffff" stroke="#1168bd" stroke-width="1.6"/>
+      </marker>
+    </defs>
+<text x="940.0" y="28" text-anchor="middle" font-size="16" font-weight="bold" fill="#0b4f8a">Code View: Sistema de Gestão Escolar — Caso de Uso LancarNotaPort</text>
+<rect x="24" y="52" width="540" height="704" rx="8" ry="8" fill="#f8fbff" stroke="#438dd5" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="40" y="74" font-size="13" font-weight="bold" fill="#0b4f8a">namespace sge_api_casosdeuso_lancarnota</text>
+<rect x="58" y="92" width="470" height="145" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 58 146 L 58 97 Q 58 92 63 92 L 523 92 Q 528 92 528 97 L 528 146 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="293.0" y="112" text-anchor="middle" font-size="12" fill="#1168bd">«use case»</text>
+<text x="293.0" y="133" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">LancarNotaService</text>
+<text x="71" y="167" font-size="13" fill="#1e293b">-turmaRepo: TurmaRepoPort</text>
+<text x="71" y="188" font-size="13" fill="#1e293b">-notaRepo: NotaRepoPort</text>
+<line x1="58" y1="202" x2="528" y2="202" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="71" y="223" font-size="13" fill="#1e293b">+executar(comando: LancarNotaComando) : Promise&lt;Nota&gt;</text>
+<rect x="58" y="345" width="470" height="107" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 58 399 L 58 350 Q 58 345 63 345 L 523 345 Q 528 345 528 350 L 528 399 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="293.0" y="365" text-anchor="middle" font-size="12" fill="#1168bd">«interface»</text>
+<text x="293.0" y="386" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">LancarNotaPort</text>
+<line x1="58" y1="417" x2="528" y2="417" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="71" y="438" font-size="13" fill="#1e293b">+executar(comando: LancarNotaComando) : Promise&lt;Nota&gt;</text>
+<rect x="158" y="540" width="270" height="152" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 158 594 L 158 545 Q 158 540 163 540 L 423 540 Q 428 540 428 545 L 428 594 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="293.0" y="560" text-anchor="middle" font-size="12" fill="#1168bd">«DTO»</text>
+<text x="293.0" y="581" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">LancarNotaComando</text>
+<text x="171" y="615" font-size="13" fill="#1e293b">+professorId: string</text>
+<text x="171" y="636" font-size="13" fill="#1e293b">+alunoId: string</text>
+<text x="171" y="657" font-size="13" fill="#1e293b">+turmaId: string</text>
+<text x="171" y="678" font-size="13" fill="#1e293b">+valor: number</text>
+<rect x="710" y="52" width="1146" height="76" rx="4" ry="4" fill="#f0f6fc" stroke="#438dd5" stroke-width="1.3"/>
+<rect x="710" y="52" width="5" height="76" rx="2" fill="#1168bd"/>
+<text x="726" y="74" font-size="12.5" font-weight="bold" fill="#0b4f8a">Fluxo do Caso de Uso (LancarNotaService.executar)</text>
+<text x="726" y="94" font-size="12" fill="#1e293b">1. Busca a Turma e confere se o professor autenticado é o titular (RN02)   ·   2. Busca a Matricula ativa do aluno na turma (RN04)</text>
+<text x="726" y="112" font-size="12" fill="#1e293b">3. Cria ou altera a Nota validando o intervalo de 0.0 a 10.0 (RN01)         ·   4. Persiste a Nota através do contrato NotaRepoPort</text>
+<rect x="710" y="165" width="1146" height="255" rx="8" ry="8" fill="#f8fbff" stroke="#438dd5" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="726" y="187" font-size="13" font-weight="bold" fill="#0b4f8a">namespace sge_api_portas_saida</text>
+<rect x="745" y="225" width="535" height="128" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 745 279 L 745 230 Q 745 225 750 225 L 1275 225 Q 1280 225 1280 230 L 1280 279 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="1012.5" y="245" text-anchor="middle" font-size="12" fill="#1168bd">«interface»</text>
+<text x="1012.5" y="266" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">TurmaRepoPort</text>
+<line x1="745" y1="297" x2="1280" y2="297" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="758" y="318" font-size="13" fill="#1e293b">+buscarPorId(id: string) : Promise&lt;Turma&gt;</text>
+<text x="758" y="339" font-size="13" fill="#1e293b">+buscarMatriculaAtiva(alunoId: string, turmaId: string) : Promise&lt;Matricula&gt;</text>
+<rect x="1345" y="225" width="475" height="128" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 1345 279 L 1345 230 Q 1345 225 1350 225 L 1815 225 Q 1820 225 1820 230 L 1820 279 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="1582.5" y="245" text-anchor="middle" font-size="12" fill="#1168bd">«interface»</text>
+<text x="1582.5" y="266" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">NotaRepoPort</text>
+<line x1="1345" y1="297" x2="1820" y2="297" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="1358" y="318" font-size="13" fill="#1e293b">+buscarPorMatricula(matriculaId: string) : Promise&lt;Nota&gt;</text>
+<text x="1358" y="339" font-size="13" fill="#1e293b">+salvar(nota: Nota) : Promise&lt;void&gt;</text>
+<rect x="710" y="465" width="1146" height="291" rx="8" ry="8" fill="#f8fbff" stroke="#438dd5" stroke-width="1.5" stroke-dasharray="6,4"/>
+<text x="726" y="487" font-size="13" font-weight="bold" fill="#0b4f8a">namespace sge_api_dominio</text>
+<rect x="745" y="508" width="360" height="107" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 745 562 L 745 513 Q 745 508 750 508 L 1100 508 Q 1105 508 1105 513 L 1105 562 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="925.0" y="528" text-anchor="middle" font-size="12" fill="#1168bd">«entity»</text>
+<text x="925.0" y="549" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">Turma</text>
+<line x1="745" y1="580" x2="1105" y2="580" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="758" y="601" font-size="13" fill="#1e293b">+professorETitular(professorId: string) : boolean</text>
+<rect x="745" y="635" width="250" height="107" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 745 689 L 745 640 Q 745 635 750 635 L 990 635 Q 995 635 995 640 L 995 689 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="870.0" y="655" text-anchor="middle" font-size="12" fill="#1168bd">«entity»</text>
+<text x="870.0" y="676" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">Matricula</text>
+<line x1="745" y1="707" x2="995" y2="707" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="758" y="728" font-size="13" fill="#1e293b">+estaAtiva() : boolean</text>
+<rect x="1295" y="540" width="525" height="128" rx="5" ry="5" fill="#ffffff" stroke="#438dd5" stroke-width="1.6"/>
+<path d="M 1295 594 L 1295 545 Q 1295 540 1300 540 L 1815 540 Q 1820 540 1820 545 L 1820 594 Z" fill="#eef5fc" stroke="#438dd5" stroke-width="1.6"/>
+<text x="1557.5" y="560" text-anchor="middle" font-size="12" fill="#1168bd">«entity»</text>
+<text x="1557.5" y="581" text-anchor="middle" font-size="14.5" font-weight="bold" fill="#0b4f8a">Nota</text>
+<line x1="1295" y1="612" x2="1820" y2="612" stroke="#bfdbfe" stroke-width="1.3"/>
+<text x="1308" y="633" font-size="13" fill="#1e293b" text-decoration="underline">+criar(matriculaId: string, valor: number) : Nota</text>
+<text x="1308" y="654" font-size="13" fill="#1e293b">+alterarValor(valor: number) : void</text>
+<path d="M 293 237 L 293 345" fill="none" stroke="#1168bd" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#realizeTri)"/>
+<rect x="253.0" y="279" width="80.0" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="293" y="292" text-anchor="middle" font-size="11.5" fill="#0b4f8a">implementa</text>
+<path d="M 293 452 L 293 540" fill="none" stroke="#1168bd" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arrowOpen)"/>
+<rect x="266.6" y="484" width="52.8" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="293" y="497" text-anchor="middle" font-size="11.5" fill="#0b4f8a">recebe</text>
+<path d="M 528 195 L 635 195 L 635 285 L 745 285" fill="none" stroke="#1168bd" stroke-width="1.4" marker-end="url(#arrowOpen)"/>
+<path d="M 528 145 L 1580 145 L 1580 225" fill="none" stroke="#1168bd" stroke-width="1.4" marker-end="url(#arrowOpen)"/>
+<path d="M 528 218 L 615 218 L 615 442 L 1555 442 L 1555 540" fill="none" stroke="#1168bd" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arrowOpen)"/>
+<path d="M 528 236 L 600 236 L 600 562 L 745 562" fill="none" stroke="#1168bd" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arrowOpen)"/>
+<path d="M 528 252 L 584 252 L 584 685 L 745 685" fill="none" stroke="#1168bd" stroke-width="1.4" stroke-dasharray="5,4" marker-end="url(#arrowOpen)"/>
+<rect x="575.8" y="254" width="168.4" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="660" y="267" text-anchor="middle" font-size="11.5" fill="#0b4f8a">busca turma e matrícula</text>
+<rect x="1092.8" y="134" width="134.39999999999998" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="1160" y="147" text-anchor="middle" font-size="11.5" fill="#0b4f8a">busca e salva nota</text>
+<rect x="1082.6" y="431" width="154.79999999999998" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="1160" y="444" text-anchor="middle" font-size="11.5" fill="#0b4f8a">cria ou altera (RN01)</text>
+<rect x="581.2" y="533" width="161.6" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="662" y="546" text-anchor="middle" font-size="11.5" fill="#0b4f8a">confere titular (RN02)</text>
+<rect x="587.8" y="654" width="134.39999999999998" height="18" fill="#eef5fc" stroke="#bfdbfe" stroke-width="0.8" rx="3"/>
+<text x="655" y="667" text-anchor="middle" font-size="11.5" fill="#0b4f8a">exige ativa (RN04)</text>
+</svg>
