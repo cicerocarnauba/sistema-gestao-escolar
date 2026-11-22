@@ -90,33 +90,33 @@ A aplicação segue a **Arquitetura Hexagonal (Ports and Adapters)**, isolando a
 
 ### Diagramas (C4)
 
-Os diagramas e seus códigos-fonte ficam armazenados em [`docs/c4/`](docs/c4/) e também são exibidos diretamente abaixo:
+Os códigos-fonte dos diagramas ficam em [`docs/`](docs/) e as imagens renderizadas em [`docs/img/`](docs/img/), exibidas diretamente abaixo:
 
-- [x] **Nível 1 — Contexto** ([PNG](docs/c4/contexto.png) · [Google Drive](https://drive.google.com/file/d/1yu138ALJhnlcqqYpGP0vzdT3wPmIysaD/view?usp=sharing) · [DSL](docs/c4/workspace.dsl))
-- [x] **Nível 2 — Containers** ([PNG](docs/c4/containers.png) · [Google Drive](https://drive.google.com/file/d/1UgPXfaxJO6yNx2u8hJ4T4mLIaPUNipiF/view?usp=sharing) · [DSL](docs/c4/workspace.dsl))
-- [x] **Nível 3 — Componentes** ([SVG](docs/c4/componentes.svg) · [PNG](docs/c4/componentes.png) · [DSL](docs/c4/workspace.dsl))
-- [x] **Nível 4 — Código (Entidades e Regras de Domínio)** ([SVG](docs/c4/codigo-dominio.svg) · [PNG](docs/c4/codigo-dominio.png) · [Mermaid `.mmd`](docs/c4/codigo-dominio.mmd))
-- [x] **Nível 4 — Código (Caso de Uso `LancarNotaPort`)** ([SVG](docs/c4/codigo-lancar-nota.svg) · [PNG](docs/c4/codigo-lancar-nota.png) · [Mermaid `.mmd`](docs/c4/codigo-lancar-nota.mmd))
+- [x] **Nível 1 — Contexto** ([PNG](docs/img/contexto.png) · [Google Drive](https://drive.google.com/file/d/1yu138ALJhnlcqqYpGP0vzdT3wPmIysaD/view?usp=sharing) · [DSL](docs/workspace.dsl))
+- [x] **Nível 2 — Containers** ([PNG](docs/img/containers.png) · [Google Drive](https://drive.google.com/file/d/1UgPXfaxJO6yNx2u8hJ4T4mLIaPUNipiF/view?usp=sharing) · [DSL](docs/workspace.dsl))
+- [x] **Nível 3 — Componentes** ([SVG](docs/img/componentes.svg) · [PNG](docs/img/componentes.png) · [DSL](docs/workspace.dsl))
+- [x] **Nível 4 — Código (Entidades e Regras de Domínio)** ([SVG](docs/img/codigo-dominio.svg) · [PNG](docs/img/codigo-dominio.png) · [Mermaid `.mmd`](docs/codigo-dominio.mmd))
+- [x] **Nível 4 — Código (Caso de Uso `LancarNotaPort`)** ([SVG](docs/img/codigo-lancar-nota.svg) · [PNG](docs/img/codigo-lancar-nota.png) · [Mermaid `.mmd`](docs/codigo-lancar-nota.mmd))
 
 #### C1 — Diagrama de Contexto
 
-[![C1 — Diagrama de Contexto](docs/c4/contexto.png)](docs/c4/contexto.png)
+[![C1 — Diagrama de Contexto](docs/img/contexto.png)](docs/img/contexto.png)
 
 #### C2 — Diagrama de Containers
 
-[![C2 — Diagrama de Containers](docs/c4/containers.png)](docs/c4/containers.png)
+[![C2 — Diagrama de Containers](docs/img/containers.png)](docs/img/containers.png)
 
 #### C3 — Diagrama de Componentes (Arquitetura Hexagonal)
 
-[![C3 — Diagrama de Componentes](docs/c4/componentes.svg)](docs/c4/componentes.svg)
+[![C3 — Diagrama de Componentes](docs/img/componentes.svg)](docs/img/componentes.svg)
 
 #### C4 — Diagrama de Código: Entidades e Regras de Domínio
 
-[![C4 — Entidades e Regras de Domínio](docs/c4/codigo-dominio.svg)](docs/c4/codigo-dominio.svg)
+[![C4 — Entidades e Regras de Domínio](docs/img/codigo-dominio.svg)](docs/img/codigo-dominio.svg)
 
 #### C4 — Diagrama de Código: Caso de Uso `LancarNotaPort`
 
-[![C4 — Caso de Uso LancarNotaPort](docs/c4/codigo-lancar-nota.svg)](docs/c4/codigo-lancar-nota.svg)
+[![C4 — Caso de Uso LancarNotaPort](docs/img/codigo-lancar-nota.svg)](docs/img/codigo-lancar-nota.svg)
 
 ## Estrutura do repositório
 
@@ -124,14 +124,14 @@ Os diagramas e seus códigos-fonte ficam armazenados em [`docs/c4/`](docs/c4/) e
 .
 ├── README.md
 ├── docs/
-│   └── c4/
-│       ├── workspace.dsl             # Fonte Structurizr DSL (C1, C2 e C3)
+│   ├── workspace.dsl                 # Fonte Structurizr DSL (C1, C2 e C3)
+│   ├── codigo-dominio.mmd            # Fonte Mermaid C4 — Entidades e Regras de Domínio
+│   ├── codigo-lancar-nota.mmd        # Fonte Mermaid C4 — Caso de Uso LancarNotaPort
+│   └── img/                          # Imagens exportadas dos diagramas (PNG e SVG)
 │       ├── contexto.png              # Diagrama C1 — Contexto
 │       ├── containers.png            # Diagrama C2 — Containers
 │       ├── componentes.{svg,png}     # Diagrama C3 — Componentes (Arquitetura Hexagonal)
-│       ├── codigo-dominio.mmd        # Fonte Mermaid C4 — Entidades e Regras de Domínio
 │       ├── codigo-dominio.{svg,png}  # Diagrama C4 — Entidades e Regras de Domínio
-│       ├── codigo-lancar-nota.mmd    # Fonte Mermaid C4 — Caso de Uso LancarNotaPort
 │       └── codigo-lancar-nota.{svg,png} # Diagrama C4 — Caso de Uso LancarNotaPort
 ├── backend/                          # API Node.js / TypeScript (Arquitetura Hexagonal)
 │   └── src/

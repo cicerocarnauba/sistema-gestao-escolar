@@ -19,5 +19,7 @@ build/
 *.md
 !README.md
 docs/*
-!docs/c4/
+!docs/workspace.dsl
+!docs/*.mmd
+!docs/img/
 
