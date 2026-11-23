@@ -12,26 +12,27 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
             apiBackend = container "API de Gestão Escolar (Backend)" "Implementa os casos de uso e regras de negócio acadêmicas seguindo a Arquitetura Hexagonal (Ports and Adapters)." "Node.js / TypeScript (REST API)" {
 
                 # Faixa 1: Driving Side (Adaptadores de Entrada REST)
-                authController = component "AuthController" "Adaptador REST (POST /auth/login) e middleware RBAC/JWT para autenticação e autorização por perfil (RF01, RF02)." "Express / Driving Adapter"
-                academicoController = component "AcademicoController" "Adaptador REST (POST/GET /usuarios, POST/GET /turmas, POST /matriculas) para gestão acadêmica (RF03 a RF07, RF09)." "Express / Driving Adapter"
-                avaliacaoController = component "AvaliacaoController" "Adaptador REST (POST/PUT /notas, GET /boletim) para lançamento de notas e consulta de boletim (RF08, RF10)." "Express / Driving Adapter"
+                authController = component "AuthController" "POST /auth/login e middleware RBAC/JWT para autenticação e autorização por perfil (RF01, RF02)." "Express / Driving Adapter"
+                academicoController = component "AcademicoController" "POST/GET /usuarios, POST/GET /turmas e POST /matriculas para gestão acadêmica (RF03 a RF07, RF09)." "Express / Driving Adapter"
+                avaliacaoController = component "AvaliacaoController" "POST/PUT /notas e GET /boletim para lançamento de notas e consulta de boletim (RF08, RF10)." "Express / Driving Adapter"
 
-                # Faixa 2: Núcleo Hexagonal - Portas de Entrada, Casos de Uso e Domínio
-                securityComponent = component "Security & Auth Core" "Porta de entrada AutenticarUsuarioPort; valida credenciais e perfil de acesso (Usuario, Perfil)." "Hexagonal Core / Input Port"
-                academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuario, ListarUsuarios, CriarTurma, ConsultarTurmas e MatricularAluno; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Hexagonal Core / Domain"
-                avaliacaoCore = component "Avaliação e Notas Core" "Portas LancarNotaPort e ConsultarBoletimPort; entidades Nota e Boletim e regras RN01, RN02, RN04 e RN05." "Hexagonal Core / Domain"
+                # Faixas 2 e 3: Núcleo Hexagonal (Casos de Uso, Domínio e Portas)
+                group "Núcleo Hexagonal (Casos de Uso, Domínio e Portas)" {
+                    securityComponent = component "Security & Auth Core" "Porta AutenticarUsuarioPort; valida credenciais e perfil de acesso com a entidade Usuario." "Input Port / Use Case" "Core"
+                    academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuario, CriarTurma, MatricularAluno e Consultas; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Input Ports / Domain" "Core"
+                    avaliacaoCore = component "Avaliação e Notas Core" "Portas LancarNotaPort e ConsultarBoletimPort; entidades Nota e Boletim e regras RN01, RN02, RN04 e RN05." "Input Ports / Domain" "Core"
 
-                # Faixa 3: Núcleo Hexagonal - Portas de Saída (Interfaces)
-                authServicePort = component "AuthServicePort" "Porta de saída (interface) para geração/comparação de hash de senha e emissão/validação de token JWT." "Output Port (Interface)"
-                usuarioRepoPort = component "UsuarioRepoPort" "Porta de saída (interface) para busca e persistência de Usuario, Aluno e Professor." "Output Port (Interface)"
-                turmaRepoPort = component "TurmaRepoPort" "Porta de saída (interface) para busca e persistência de Turma e Matricula." "Output Port (Interface)"
-                notaRepoPort = component "NotaRepoPort" "Porta de saída (interface) para busca e persistência de Nota." "Output Port (Interface)"
+                    authServicePort = component "AuthServicePort" "Contrato para hash de senha (bcrypt) e emissão/validação de token JWT." "Output Port (Interface)" "Core"
+                    usuarioRepoPort = component "UsuarioRepoPort" "Contrato de busca e persistência de Usuario, Aluno e Professor." "Output Port (Interface)" "Core"
+                    turmaRepoPort = component "TurmaRepoPort" "Contrato de busca e persistência de Turma e Matricula." "Output Port (Interface)" "Core"
+                    notaRepoPort = component "NotaRepoPort" "Contrato de busca e persistência de Nota." "Output Port (Interface)" "Core"
+                }
 
                 # Faixa 4: Driven Side (Adaptadores de Saída / Infraestrutura)
-                authAdapter = component "JwtBcryptAuthAdapter" "Adaptador de saída que implementa AuthServicePort usando JWT e bcrypt." "Driven Adapter / Security"
-                usuarioRepository = component "UsuarioRepository Adapter" "Adaptador de saída SQL que implementa UsuarioRepoPort." "Driven Adapter / SQL"
-                turmaRepository = component "TurmaRepository Adapter" "Adaptador de saída SQL que implementa TurmaRepoPort." "Driven Adapter / SQL"
-                notaRepository = component "NotaRepository Adapter" "Adaptador de saída SQL que implementa NotaRepoPort." "Driven Adapter / SQL"
+                authAdapter = component "JwtBcryptAuthAdapter" "Implementa AuthServicePort com jsonwebtoken (JWT) e bcryptjs." "Driven Adapter / Security"
+                usuarioRepository = component "UsuarioRepository Adapter" "Implementa UsuarioRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
+                turmaRepository = component "TurmaRepository Adapter" "Implementa TurmaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
+                notaRepository = component "NotaRepository Adapter" "Implementa NotaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
             }
 
             database = container "Banco de Dados" "Armazena dados cadastrais de usuários, turmas, matrículas e notas." "PostgreSQL / SQLite" "Database"
@@ -46,7 +47,7 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
 
         # Relacionamentos Nível 3: Frontend -> Driving Adapters
         webApp -> authController "POST /auth/login" "JSON / HTTPS"
-        webApp -> academicoController "POST/GET /usuarios, /turmas · POST /matriculas" "JSON / HTTPS"
+        webApp -> academicoController "/usuarios, /turmas, /matriculas" "JSON / HTTPS"
         webApp -> avaliacaoController "POST/PUT /notas · GET /boletim" "JSON / HTTPS"
 
         # Driving Adapters -> Core (Input Ports)
@@ -55,19 +56,19 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
         avaliacaoController -> avaliacaoCore "Aciona Input Ports"
 
         # Core -> Output Ports (Interfaces do Núcleo)
-        securityComponent -> authServicePort "Compara hash e emite JWT"
+        securityComponent -> authServicePort "Hash e JWT"
         securityComponent -> usuarioRepoPort "Busca usuário"
-        academicoCore -> authServicePort "Gera hash de senha"
-        academicoCore -> usuarioRepoPort "Persiste e lista usuários"
-        academicoCore -> turmaRepoPort "Persiste e consulta turmas/matrículas"
-        avaliacaoCore -> turmaRepoPort "Verifica titular e matrícula ativa"
-        avaliacaoCore -> notaRepoPort "Persiste e consulta notas"
+        academicoCore -> authServicePort "Hash senha"
+        academicoCore -> usuarioRepoPort "Usuários"
+        academicoCore -> turmaRepoPort "Turmas e matrículas"
+        avaliacaoCore -> turmaRepoPort "Titular e matrícula"
+        avaliacaoCore -> notaRepoPort "Notas e boletim"
 
-        # Driven Adapters -> Output Ports (Inversão de Dependência)
-        authAdapter -> authServicePort "Implementa"
-        usuarioRepository -> usuarioRepoPort "Implementa"
-        turmaRepository -> turmaRepoPort "Implementa"
-        notaRepository -> notaRepoPort "Implementa"
+        # Output Ports -> Driven Adapters (em runtime, via Inversão de Dependência)
+        authServicePort -> authAdapter "Implementado por (DIP)"
+        usuarioRepoPort -> usuarioRepository "Implementado por (DIP)"
+        turmaRepoPort -> turmaRepository "Implementado por (DIP)"
+        notaRepoPort -> notaRepository "Implementado por (DIP)"
 
         # Driven Adapters -> Banco de Dados
         usuarioRepository -> database "Lê e grava usuários" "SQL / TCP"
@@ -76,6 +77,11 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
     }
 
     views {
+        properties {
+            "kroki.url" "https://kroki.io"
+            "kroki.format" "png"
+        }
+
         systemContext sistemaEscolar "SystemContext" {
             include *
             autoLayout lr
@@ -88,7 +94,81 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
 
         component apiBackend "Components" {
             include *
-            autoLayout lr
+            autoLayout lr 300 180
+        }
+
+        # ------------------------------------------------------------
+        # Nível 4 (C4) - Código PlantUML (.puml) de cada Componente
+        # Compatível com Structurizr Playground (web) e Structurizr Local
+        # ------------------------------------------------------------
+        image authController "CodeAuthController" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/auth-controller.puml"
+            title "Code View: AuthController"
+        }
+
+        image academicoController "CodeAcademicoController" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/academico-controller.puml"
+            title "Code View: AcademicoController"
+        }
+
+        image avaliacaoController "CodeAvaliacaoController" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/avaliacao-controller.puml"
+            title "Code View: AvaliacaoController"
+        }
+
+        image securityComponent "CodeSecurityAuthCore" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/security-auth-core.puml"
+            title "Code View: Security & Auth Core"
+        }
+
+        image academicoCore "CodeGestaoAcademicaCore" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/gestao-academica-core.puml"
+            title "Code View: Gestão Acadêmica Core"
+        }
+
+        image avaliacaoCore "CodeAvaliacaoNotasCore" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/avaliacao-notas-core.puml"
+            title "Code View: Avaliação e Notas Core"
+        }
+
+        image authServicePort "CodeAuthServicePort" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/auth-service-port.puml"
+            title "Code View: AuthServicePort"
+        }
+
+        image usuarioRepoPort "CodeUsuarioRepoPort" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/usuario-repo-port.puml"
+            title "Code View: UsuarioRepoPort"
+        }
+
+        image turmaRepoPort "CodeTurmaRepoPort" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/turma-repo-port.puml"
+            title "Code View: TurmaRepoPort"
+        }
+
+        image notaRepoPort "CodeNotaRepoPort" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/nota-repo-port.puml"
+            title "Code View: NotaRepoPort"
+        }
+
+        image authAdapter "CodeJwtBcryptAuthAdapter" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/jwt-bcrypt-auth-adapter.puml"
+            title "Code View: JwtBcryptAuthAdapter"
+        }
+
+        image usuarioRepository "CodeUsuarioRepositoryAdapter" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/usuario-repository-adapter.puml"
+            title "Code View: UsuarioRepository Adapter"
+        }
+
+        image turmaRepository "CodeTurmaRepositoryAdapter" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/turma-repository-adapter.puml"
+            title "Code View: TurmaRepository Adapter"
+        }
+
+        image notaRepository "CodeNotaRepositoryAdapter" {
+            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/nota-repository-adapter.puml"
+            title "Code View: NotaRepository Adapter"
         }
 
         styles {
@@ -113,6 +193,12 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
                 background #ffffff
                 stroke #438dd5
                 color #1168bd
+            }
+            element "Core" {
+                shape Component
+                background #f8fbff
+                stroke #1168bd
+                color #0b4f8a
             }
             element "Web Browser" {
                 shape WebBrowser

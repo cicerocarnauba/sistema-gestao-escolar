@@ -1,0 +1,59 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.adapters.inbound.http.avaliacao" {
+    interface LancarNotaPort {
+        + executar(comando: LancarNotaComando) : Promise<Nota>
+    }
+
+    interface ConsultarBoletimPort {
+        + executar(alunoId: string) : Promise<Boletim[]>
+    }
+
+    class AvaliacaoController {
+        - lancarNota : LancarNotaPort
+        - consultarBoletim : ConsultarBoletimPort
+        + postNota(req: Request, res: Response) : Promise<void>
+        + putNota(req: Request, res: Response) : Promise<void>
+        + getBoletim(req: Request, res: Response) : Promise<void>
+    }
+
+    class LancarNotaRequestDTO {
+        + turmaId : string
+        + alunoId : string
+        + valor : number
+    }
+
+    class BoletimResponseDTO {
+        + turmaId : string
+        + disciplina : string
+        + notas : number[]
+        + media : number
+        + situacao : string
+    }
+
+    AvaliacaoController ..> LancarNotaPort : POST/PUT /notas (RF08)
+    AvaliacaoController ..> ConsultarBoletimPort : GET /boletim (RF10)
+    AvaliacaoController ..> LancarNotaRequestDTO : extrai payload
+    AvaliacaoController ..> BoletimResponseDTO : serializa JSON
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - AvaliacaoController</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador REST para lançamento de notas e consulta do boletim | Equipe 5 | UFC Quixadá</color></size>
+@enduml

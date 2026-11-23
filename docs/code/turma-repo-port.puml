@@ -1,0 +1,53 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.core.ports.out.turma" {
+    interface TurmaRepoPort {
+        + salvar(turma: Turma) : Promise<void>
+        + buscarPorId(id: string) : Promise<Turma | null>
+        + buscarPorCodigo(codigo: string, periodoLetivo: string) : Promise<Turma | null>
+        + listarTodas() : Promise<Turma[]>
+        + listarPorProfessor(professorId: string) : Promise<Turma[]>
+        + listarPorAlunoMatriculado(alunoId: string) : Promise<Turma[]>
+        + salvarMatricula(matricula: Matricula) : Promise<void>
+        + buscarMatriculaAtiva(alunoId: string, turmaId: string) : Promise<Matricula | null>
+    }
+
+    class Turma {
+        - id : string
+        - codigo : string
+        - disciplina : string
+        - periodoLetivo : string
+        - professorId : string
+    }
+
+    class Matricula {
+        - id : string
+        - alunoId : string
+        - turmaId : string
+        - ativa : boolean
+    }
+
+    TurmaRepoPort ..> Turma : persiste e consulta
+    TurmaRepoPort ..> Matricula : persiste e consulta
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - TurmaRepoPort</b></size>\n<size:11><color:#555555>Contrato da porta de saída para persistência e consulta de turmas e matrículas | Equipe 5 | UFC Quixadá</color></size>
+@enduml

@@ -1,0 +1,48 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.core.ports.out.usuario" {
+    interface UsuarioRepoPort {
+        + salvar(usuario: Usuario) : Promise<void>
+        + buscarPorId(id: string) : Promise<Usuario | null>
+        + buscarPorEmailOuMatricula(identificador: string) : Promise<Usuario | null>
+        + listar(perfil?: Perfil) : Promise<Usuario[]>
+    }
+
+    abstract class Usuario {
+        - id : string
+        - nome : string
+        - email : string
+        - documento : string
+        - perfil : Perfil
+    }
+
+    class Aluno extends Usuario {
+        + matricula : string
+    }
+
+    class Professor extends Usuario {
+    }
+
+    UsuarioRepoPort ..> Usuario : persiste e recupera
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - UsuarioRepoPort</b></size>\n<size:11><color:#555555>Contrato da porta de saída para persistência e consulta de usuários | Equipe 5 | UFC Quixadá</color></size>
+@enduml

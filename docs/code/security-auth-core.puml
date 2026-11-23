@@ -1,0 +1,65 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.core.security" {
+    interface AutenticarUsuarioPort {
+        + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
+    }
+
+    class AutenticarUsuarioUseCase implements AutenticarUsuarioPort {
+        - usuarioRepo : UsuarioRepoPort
+        - authService : AuthServicePort
+        + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
+    }
+
+    class AutenticarUsuarioInput {
+        + identificador : string
+        + senha : string
+    }
+
+    class AutenticarUsuarioOutput {
+        + token : string
+        + usuarioId : string
+        + nome : string
+        + perfil : Perfil
+    }
+
+    abstract class Usuario {
+        - id : string
+        - email : string
+        - senhaHash : string
+        - perfil : Perfil
+        + possuiPerfil(perfil: Perfil) : boolean
+    }
+
+    enum Perfil {
+        ADMIN
+        PROFESSOR
+        ALUNO
+    }
+
+    AutenticarUsuarioUseCase ..> AutenticarUsuarioInput : recebe
+    AutenticarUsuarioUseCase ..> AutenticarUsuarioOutput : produz
+    AutenticarUsuarioUseCase ..> Usuario : valida credenciais e perfil
+    Usuario --> Perfil : possui
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - Security & Auth Core</b></size>\n<size:11><color:#555555>Detalhes de implementação da porta de entrada e caso de uso de autenticação no núcleo hexagonal | Equipe 5 | UFC Quixadá</color></size>
+@enduml

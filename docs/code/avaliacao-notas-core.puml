@@ -1,0 +1,80 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.core.avaliacao" {
+    interface LancarNotaPort {
+        + executar(comando: LancarNotaComando) : Promise<Nota>
+    }
+
+    interface ConsultarBoletimPort {
+        + executar(alunoId: string) : Promise<Boletim[]>
+    }
+
+    class LancarNotaService implements LancarNotaPort {
+        - turmaRepo : TurmaRepoPort
+        - notaRepo : NotaRepoPort
+        + executar(comando: LancarNotaComando) : Promise<Nota>
+    }
+
+    class ConsultarBoletimUseCase implements ConsultarBoletimPort {
+        - turmaRepo : TurmaRepoPort
+        - notaRepo : NotaRepoPort
+        + executar(alunoId: string) : Promise<Boletim[]>
+    }
+
+    class LancarNotaComando {
+        + professorId : string
+        + alunoId : string
+        + turmaId : string
+        + valor : number
+    }
+
+    class Nota {
+        - id : string
+        - matriculaId : string
+        - valor : number
+        + {static} criar(matriculaId: string, valor: number) : Nota
+        + alterarValor(valor: number) : void
+        - {static} validarIntervalo(valor: number) : void
+    }
+
+    class Boletim {
+        + turmaId : string
+        + notas : number[]
+        + media : number
+        + situacao : SituacaoBoletim
+        + {static} calcular(turmaId: string, notas: number[]) : Boletim
+    }
+
+    enum SituacaoBoletim {
+        EM_ANDAMENTO
+        APROVADO
+        REPROVADO
+    }
+
+    LancarNotaService ..> LancarNotaComando : recebe
+    LancarNotaService ..> Nota : valida 0..10 (RN01, RN02, RN04)
+    ConsultarBoletimUseCase ..> Boletim : calcula média (RN05)
+    Boletim ..> Nota : agrega valores
+    Boletim --> SituacaoBoletim : define
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - Avaliação e Notas Core</b></size>\n<size:11><color:#555555>Detalhes de implementação de LancarNotaPort, ConsultarBoletimPort e regras RN01, RN02, RN04 e RN05 | Equipe 5 | UFC Quixadá</color></size>
+@enduml

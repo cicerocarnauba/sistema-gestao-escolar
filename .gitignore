@@ -21,5 +21,6 @@ build/
 docs/*
 !docs/workspace.dsl
 !docs/*.mmd
+!docs/code/
 !docs/img/
 

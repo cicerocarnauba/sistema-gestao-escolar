@@ -1,0 +1,46 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.core.ports.out.security" {
+    interface AuthServicePort {
+        + gerarHashSenha(senhaPura: string) : Promise<string>
+        + compararSenha(senhaPura: string, senhaHash: string) : Promise<boolean>
+        + gerarToken(payload: TokenPayload) : string
+        + verificarToken(token: string) : TokenPayload
+    }
+
+    class TokenPayload {
+        + sub : string
+        + email : string
+        + perfil : Perfil
+    }
+
+    enum Perfil {
+        ADMIN
+        PROFESSOR
+        ALUNO
+    }
+
+    AuthServicePort ..> TokenPayload : emite e verifica
+    TokenPayload --> Perfil : contém
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - AuthServicePort</b></size>\n<size:11><color:#555555>Contrato da porta de saída para criptografia de senhas e gestão de tokens JWT | Equipe 5 | UFC Quixadá</color></size>
+@enduml

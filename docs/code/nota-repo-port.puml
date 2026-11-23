@@ -1,0 +1,42 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.core.ports.out.nota" {
+    interface NotaRepoPort {
+        + salvar(nota: Nota) : Promise<void>
+        + atualizar(nota: Nota) : Promise<void>
+        + buscarPorId(id: string) : Promise<Nota | null>
+        + buscarPorMatricula(matriculaId: string) : Promise<Nota | null>
+        + listarPorAlunoETurma(alunoId: string, turmaId: string) : Promise<Nota[]>
+    }
+
+    class Nota {
+        - id : string
+        - matriculaId : string
+        - valor : number
+        + {static} criar(matriculaId: string, valor: number) : Nota
+        + alterarValor(valor: number) : void
+    }
+
+    NotaRepoPort ..> Nota : persiste e consulta
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - NotaRepoPort</b></size>\n<size:11><color:#555555>Contrato da porta de saída para persistência e consulta de avaliações e notas | Equipe 5 | UFC Quixadá</color></size>
+@enduml

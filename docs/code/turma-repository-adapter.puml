@@ -1,0 +1,69 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.adapters.outbound.persistence.turma" {
+    interface TurmaRepoPort {
+        + salvar(turma: Turma) : Promise<void>
+        + buscarPorId(id: string) : Promise<Turma | null>
+        + listarTodas() : Promise<Turma[]>
+        + listarPorProfessor(professorId: string) : Promise<Turma[]>
+        + listarPorAlunoMatriculado(alunoId: string) : Promise<Turma[]>
+        + salvarMatricula(matricula: Matricula) : Promise<void>
+        + buscarMatriculaAtiva(alunoId: string, turmaId: string) : Promise<Matricula | null>
+    }
+
+    class SqlTurmaRepository implements TurmaRepoPort {
+        - db : DatabaseClient
+        + salvar(turma: Turma) : Promise<void>
+        + buscarPorId(id: string) : Promise<Turma | null>
+        + listarTodas() : Promise<Turma[]>
+        + listarPorProfessor(professorId: string) : Promise<Turma[]>
+        + listarPorAlunoMatriculado(alunoId: string) : Promise<Turma[]>
+        + salvarMatricula(matricula: Matricula) : Promise<void>
+        + buscarMatriculaAtiva(alunoId: string, turmaId: string) : Promise<Matricula | null>
+    }
+
+    interface DatabaseClient {
+        + query<T>(sql: string, params?: unknown[]) : Promise<T[]>
+        + execute(sql: string, params?: unknown[]) : Promise<void>
+    }
+
+    class TurmaRow {
+        ~ id : string
+        ~ codigo : string
+        ~ disciplina : string
+        ~ periodo_letivo : string
+        ~ professor_id : string
+    }
+
+    class MatriculaRow {
+        ~ id : string
+        ~ aluno_id : string
+        ~ turma_id : string
+        ~ ativa : number
+    }
+
+    SqlTurmaRepository --> "1" DatabaseClient : executa SQL
+    SqlTurmaRepository ..> TurmaRow : mapeia turma
+    SqlTurmaRepository ..> MatriculaRow : mapeia matrícula
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - TurmaRepository Adapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de turmas e matrículas | Equipe 5 | UFC Quixadá</color></size>
+@enduml

@@ -1,0 +1,57 @@
+@startuml
+set separator none
+top to bottom direction
+skinparam backgroundColor #FFFFFF
+skinparam shadowing false
+skinparam dpi 180
+skinparam defaultFontName "SansSerif"
+skinparam defaultFontSize 12
+skinparam packageStyle folder
+skinparam packageBackgroundColor #FFFFFF
+skinparam packageBorderColor #333333
+skinparam packageFontStyle bold
+skinparam classBackgroundColor #FFFFFF
+skinparam classHeaderBackgroundColor #FFFFFF
+skinparam classBorderColor #333333
+skinparam arrowColor #333333
+skinparam arrowFontColor #222222
+skinparam noteBackgroundColor #FAFAFA
+skinparam noteBorderColor #666666
+
+package "sge.api.adapters.outbound.persistence.usuario" {
+    interface UsuarioRepoPort {
+        + salvar(usuario: Usuario) : Promise<void>
+        + buscarPorId(id: string) : Promise<Usuario | null>
+        + buscarPorEmailOuMatricula(identificador: string) : Promise<Usuario | null>
+        + listar(perfil?: Perfil) : Promise<Usuario[]>
+    }
+
+    class SqlUsuarioRepository implements UsuarioRepoPort {
+        - db : DatabaseClient
+        + salvar(usuario: Usuario) : Promise<void>
+        + buscarPorId(id: string) : Promise<Usuario | null>
+        + buscarPorEmailOuMatricula(identificador: string) : Promise<Usuario | null>
+        + listar(perfil?: Perfil) : Promise<Usuario[]>
+        - mapRowToEntity(row: UsuarioRow) : Usuario
+    }
+
+    interface DatabaseClient {
+        + query<T>(sql: string, params?: unknown[]) : Promise<T[]>
+        + execute(sql: string, params?: unknown[]) : Promise<void>
+    }
+
+    class UsuarioRow {
+        ~ id : string
+        ~ nome : string
+        ~ email : string
+        ~ documento : string
+        ~ senha_hash : string
+        ~ perfil : string
+    }
+
+    SqlUsuarioRepository --> "1" DatabaseClient : executa SQL
+    SqlUsuarioRepository ..> UsuarioRow : mapeia registro
+}
+
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - UsuarioRepository Adapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de usuários | Equipe 5 | UFC Quixadá</color></size>
+@enduml
