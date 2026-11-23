@@ -12,27 +12,55 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
             apiBackend = container "API de Gestão Escolar (Backend)" "Implementa os casos de uso e regras de negócio acadêmicas seguindo a Arquitetura Hexagonal (Ports and Adapters)." "Node.js / TypeScript (REST API)" {
 
                 # Faixa 1: Driving Side (Adaptadores de Entrada REST)
-                authController = component "AuthController" "POST /auth/login e middleware RBAC/JWT para autenticação e autorização por perfil (RF01, RF02)." "Express / Driving Adapter"
-                academicoController = component "AcademicoController" "POST/GET /usuarios, POST/GET /turmas e POST /matriculas para gestão acadêmica (RF03 a RF07, RF09)." "Express / Driving Adapter"
-                avaliacaoController = component "AvaliacaoController" "POST/PUT /notas e GET /boletim para lançamento de notas e consulta de boletim (RF08, RF10)." "Express / Driving Adapter"
+                authController = component "AuthController" "POST /auth/login e middleware RBAC/JWT para autenticação e autorização por perfil (RF01, RF02)." "Express / Driving Adapter" {
+                    url "https://kroki.io/plantuml/svg/eNqdVdtuEzEQfd-vGLUvqYCUFBWhVbQiDQ0XQRuaFB6Ah8l6klj12lvb2xvwMYgHPqQ_xthNw-ZSiphI2azn-MyZi53nzqP1VaESRx4clWjRGwvaaEq8KcEbGBnvTQFCWsq9NDpxJ1IHYAEjzE8m1lRadI3ibZu9aDWEm6Iw51JPYIzKUc0jSgmtZ4_rKzTGSvme0f4AC4KNAWo3ICvHG-tRA3lF0NqpOUsWhBMa-EtFMDZKkF317t2r-hZoLBPMQE-irYKikBhvxPFq_lyhc_fHirBXhBzpH8F_l4XWmvO_OoPiGWAnWg2gjV9Tn074LKPqKp5GS5JZTWDDTaiJpWyiwNKTdU2pR4GxOfW-bGLlpxvwNQE2qdk_xpygU3nSXuZoj12FVpq-sX6GCvYA6ILyiie2wUIqn67ueB3WtyCFvjWFdNReQRxWniFZJP2erCqY8sCdyZxWYp-FQQxEQ3NCuuHDdwrOWx7uEDEu9_FSGRR19tiyyNzlulujFNka8SPAZYmQri9FTYwyE6kblk5TOKLTipx_CJZceHOl0Y4egqYLrtABf_cqHQ9uvS5nRopsvcx3UghF52hpWeZtbW4E1itVk_Ynnf_RF3QtNFxOpO1ze6RrlPHBOYSn-vQl4Gfsr1CzZrua0NtQqBnoxfBwoaNSBKGhp4Jn-LaXNYAjPcVFxzrym4yW2eOArGOt5l2e9ZYZqsLw_nqEpYFpNrM7zkcKmHPxEBpHvcetrbs2LxeCS41KCoTc2NLcs-tPhpwPnwPeeYXwZnB4MN9Ym5qZ1oWTNA-3Rwyx8ObjMAre2Uo44ZwvCc4BPuu24zs9be1m7VHWNYLgg6TzFAbSeSqQL394yQlc_zSw73Kj0PJkdvqv73AsJNTeHmXt7cCfzeO0snYebrB0czda9oI8qim5QCiLUlHBJcfrX4FYGIjXWRwX9rPH8gIc7Q-G4X0--TfwuGAsV-rm_Wiv04VvsH9ayZJgl38e97rwvpIXKK5_tLejkFuFyXPSIvwv_wYbopGP"
+                }
+                academicoController = component "AcademicoController" "POST/GET /usuarios, POST/GET /turmas e POST /matriculas para gestão acadêmica (RF03 a RF07, RF09)." "Express / Driving Adapter" {
+                    url "https://kroki.io/plantuml/svg/eNqlVk1z2jAQvftX7JBLMk0hJCVtPYwbSiHNTNtQSHppexD2QjSxLUeSm_Trx2R66Km_gj_WlTCMAgbSRsx4jPT03tvVSvKR0kzqPIk9hRoUZkwyLSSkIkVPiwy0gKHQWiQQcYmh5iL11CVPDTCBIQsvx1LkadQWMU3b6trmINQFi8Q1T8cwYrFCZyTKONSf7bk9OGJ5rLsi1e9YglAZsFQNUPJRpRw14N8Q6vvOYEaG2BgH-muMMBJxhHJ59OVG1zOgkERQgA5sWwZZI1ZvSHrOeBgzpTZrWdhrZKR0T_B6W0xKcb120DguAPu2OYBU6JL8tMxvEeW6OLTN84qcQEWNscoyXmURyzRKVeXp0DBWL7TOqiykcBMeigp894AaTwk0YiFCm2YoLZk8VzmTXPSE1AXItEeANxjmVLXbZCbX_tKEE9O9Az70pEi4wmbR30eVJ-I01zQcWL6f3oL2G262Q4FXq5VHPNZS9GgWj1-QkH3ZIPnx8wrRtuRMnuUyYZtDnUOXgrS99wixLVJFu6eg2Rijvziha7vXKq-M9C3Tkod5zGQrztPNK7uAX4p5Pl4Ssd0o0JrVGUVBtuMYpaP4GMKF2gG_tP6cGfGdEiH8cs24_PMFA39hoV3U3RSDX7ZKDj65mxfwyzLr5DUTShcGtyVe-dDHqxyV3gWJyvxTGemhm9ovgkeBQzHGGYP6XwrjwobzAA_TdDzEwTxT_05SVFZZTVWrQfnBRTyngzOo5bOC2e539w521hKVnEI-HHcWWQ7XsywcKzMjelpihuDJBoKSk6Lw4ZAc7gI9n9rn8_WEZdt_Zmte0lPWxo5H2Q7p6qDvDfiUNhXd9H69ETSHQVtECB84XvswoEwh7S3qOKZVnPwS0FGhIAXaJa3eyYqBZX_N2jBo1oxIMBerB83QXG7-VsO24BVqFl-gMqw8yWJMMNVs8tuwRwLsTUcfOxL6HQrJXJRUslNxmkFrN7k1i7cLRfrQbuTJn2nYP6BzlfMMoUGv5902vM_5DYsmt82atTHz5x1hGpkPtr8jK0vJ"
+                }
+                avaliacaoController = component "AvaliacaoController" "POST/PUT /notas e GET /boletim para lançamento de notas e consulta de boletim (RF08, RF10)." "Express / Driving Adapter" {
+                    url "https://kroki.io/plantuml/svg/eNqlVc1uE0EMvu9TWOXSCkgaUBFaRStKaKEItaUpXICDs-OkI2bH25nZlt-HQRx4kL4Ynu2mTNJQQDiX7Prz529tj-eRD-hCU5nMUwBPNToM7MCypSxwDYFhwiFwBUo7KoNmm_n32kZgBRMs388cN1aN2EjYrd3WEoQ_QcXn2s5gisZT4lG1hsHDzfQNTbExYZdt2MeKYG2M1o_J6enaatRYfyIY3EuctQjCGY3DR0MwZaPIXfc-_qPqOZCdEHSg-61dB7VC2nwTyZf4S4Pe_zlXC3tGKJn-EnyzLHSOz290RsUd4F5rCcByWFGf7fhbRqUqHrSWZV1NYM3PqIe17qHCOpDzPW0nkbF3EkLdwzM0GkvkNficgZi2AppiSfACbYlunwMesgudO9ptoA9UNjKv6yVXaBXnCXh0-WoDcjh0XGlPw_i6aMO_ZktJRmy9zBC6x2wo6Or3qdA0lvdUDj44meKUv4t9824hSdsh2J5_oGQKjo0hl_DfBXMlHPKlT05Q5ZJMwa5Snuiu2YdItO7oNIcjOm3IhzvgyMcnX0s0pd9wxloVaXzzX-EzCp2uf2dYqN-vknQUT44PFhoUGlfhnoJ5YxJX17JVLumKTGsOtqkmshmupe3Ez4X-Q1Klfalroy2u8sp5QX-V9827xFWR0rgo6dLhdWjiBC3ydXJXzVevVyyfHqnzwfi4f_jqGPqXGtaPdjcfbtzIsfJw5PB0R0gm3SAKzWBz4y-lJC3M5WQFh1qW50fDqG5kWNENqYXcBwL_hPB8fLCfST1K2TByLcFbO_RyIeSDrWI4KUasCF5rOs9hrH2gCuXmgKei4-I7w44v2aCTM7Z9uPcbx3VVw_6kGPZjkuIq2aAYlnEH5re2WiueUEBzQj6y6qo2VJENePEjsiuGdiHKnejgaGd8DHGfxm1w8QMjjmPUZafo6vjHsHnhv8DOaaNrgi35-2p3BC8b_QHVxbdhv5Ux15c9Iqvivf4TpGKcLg=="
+                }
 
                 # Faixas 2 e 3: Núcleo Hexagonal (Casos de Uso, Domínio e Portas)
                 group "Núcleo Hexagonal (Casos de Uso, Domínio e Portas)" {
-                    securityComponent = component "Security & Auth Core" "Porta AutenticarUsuarioPort; valida credenciais e perfil de acesso com a entidade Usuario." "Input Port / Use Case" "Core"
-                    academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuario, CriarTurma, MatricularAluno e Consultas; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Input Ports / Domain" "Core"
-                    avaliacaoCore = component "Avaliação e Notas Core" "Portas LancarNotaPort e ConsultarBoletimPort; entidades Nota e Boletim e regras RN01, RN02, RN04 e RN05." "Input Ports / Domain" "Core"
+                    securityComponent = component "Security & Auth Core" "Porta AutenticarUsuarioPort; valida credenciais e perfil de acesso com a entidade Usuario." "Input Port / Use Case" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNq9Vc1u00AQvvspRqmEilBSUlSErMhqSBsaCZpQK5y4jO1Jsqq9a3bX9Ad4GMSBd-CaF2O8cVqHuA3iwCSS7ZlvZ7752d1jY1HbIks9QxYM5ajRKg1SSfKsysEqiJS1KoNEaIqtUNIzl0KWwAwijC_nWhUyGaiUl-0NndQQZoGJuhJyDjNMDdUsSS6g--p5XUMzLFI7VNKeY0bQClGakLSYtZpRobgl6B7WjDkTwjmF9iYlmKk0Ib1tfb2T9RqoNDuoQC-cbIMcERcv4ng1e5yiMbtjOdgZIUf6S_DjtFBrdfWosWRcAQ6d1ABS2Yb69Mvfn6g6i5dOPK-qCbTMnDqYi06sNHUMxYUW9qYFXzxgEdKSnmFM0C8sSSti1FNToBZqorStUKU8A7rmxTyk-xy7sP72ilGpfwo-TLTKhKHeFmJcWIYEzuk3zz1cHbd9TQ0N0BCILE8pY5vZybANxUp_QbliFtP7rxJZw2FhFzzNnwXn7fJYf23g_nPGztdGwUVSImaMSbizPhirefvWAIbkAjcNj8dYsdkIYtUlySbnVTFHSZNRqoya9DlPk0jLgriXOiWMGI2xrbhVjDb6JxpitYEydC63DC79MzSLJmMTk4qjMqYQK_X-CrZGla2MlEoJZZ06ySKrEDW-_ZN3o_O7r8nFeHgahuOLe_vb6fm47ubBIe90gofmwQc-6ymif3BQNduHXKukuN3tYd0SHz5jKhKEWBOPYCxQGKCqos7NGtluB-u6-FVdPU42xry8nuCj7Bm-GPzuUdCLgoFKCD4IuvIhFMZyW_kGgTdk7PKHglMTqxQ1d64_GTUbwurwgiduz8KAT7TeQRT0DsoowV20btCLy8PQ3ztyEpyQxXRBpnR7d6Dg8mfpntPMedc7LqzVyAqCGI0qNcXqgeuyrdZI_i9_xSkpWNA1zpXEFL7C6adC5ARH_DodDuB9Ia4xWX7vHTg2a5reMcmkvOd_A5-6oso="
+                    }
+                    academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuario, CriarTurma, MatricularAluno e Consultas; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Input Ports / Domain" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNq1VlFvEzkQfs-vGIWX9EpbAipCUbQihPaoBKiQlideJt5JarHrWWxvC9zdj0H3cNJJ9yvyx27s7IZNsk2rO-FIyWbm88w3n8f2PncerS_zrOPIg6MCLXq2YNhQx3MBnmHK3nMOqbakvGbTcZ-0CcAcpqg-zS2XJh1zJtMenMbRQLgrTPlGmznMMHPU8KSFhv6zR00LzbDM_Ckb_xZzgu4EjZuQ1bNuO2qivxH0HzechRDCOU3814xgxllKdtv74k7WNZCtBKhAT-LYBkUiMd9U8jX8KkPn7s4VYa8IJdM9wbtpobV8s9MZGFeAx3E0AIZ9iz6j8NlENVk8jaPTqTSBrpvTIRb6ULGVByXV5VpxF37rgAxtPNkZKoKx1WgvSpvjOVtfucPYB_pCqpT27EnW0g8a0LNg2IMBnFvOtaNhtCZx7h-djQxv0FutygztKCsN35lmA7-Va-VfyxcXpkHx0tEYHYHOi4xyMt7dXuoB-GB9TwVLnov6OaAamNKVaDVXqMsf_9Zw_1O2ZRkbErTUslvUn1vQf1sgnDpvUfmqxCrdGmmdShRByWnVsBqWo6jFTjnqrM2RsiqDStzmdGSu8BW6qzZnIS0bY57Hh4YGBTtX6qW5t4TVqFD6lDkjNNsrGRUSBT2ZtK3ofchrtdYJrUURZWfknGz09khr4Ljc99BVcarnrRql2ildZNrgLSJpTvk1eX3dOr2o2Z615N3_4T650D50Ua8xocbvFHXVYPeoEmOLtrriHml3odSGGxSqzSAX9ih4e3vtfqPIWikquK9Zp03628fT4WFSLdhAjkyJbZRGILjWJhbolxLF2becCiHEm0YTzeWGkMMXSqOVTuXgh977t4-e7MUYy1zdX7pwcJBAt99t9NYAPOXtGddmLHt6UHPcgawrq5Eig8IivMPARzN08vYw6B8nw2kyZqH5QdPNACbaCQ2U1wz4VcRe_Mlw4hQLJVmX0flZu6O2jOSmW_wtVx3CWG6-4dE0GR6FRMkqYT8ZqnBpDh4cx5G8JI_ZFbkQeXXE4uKvEC9FJ0vqo44OcBVdrCDfHCeVjpc_5eK77A33cNlaARN29-KfULyD3-Hkc6kLgmN5vDwdw7tSf5GA34dHkVDNtPNctnh4JfwX7HJB6g=="
+                    }
+                    avaliacaoCore = component "Avaliação e Notas Core" "Portas LancarNotaPort e ConsultarBoletimPort; entidades Nota e Boletim e regras RN01, RN02, RN04 e RN05." "Input Ports / Domain" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNqtVlFv2zYQfvevOKQvCRo7cboMg2AIdR2nDbC4adzmpS2Gs3R2iUqkSlJJt64_ZthDsd-RP9YjLTmUrTgDWhowBN539919dyL11FjUtsyzjiELhgrUaJUGqSR1rCrAKpgpa1UOqdCUWKFkx3wU0gFzmGHycaFVKdORytjt0alfAcJ8wFTdCLmAOWaGAktaCOj_dhju0BzLzJ4qaSeYE-xMUZopaTHfaUdNxV8E_aPAWHBCuKCp_TMjmKssJb1pffZg1jVQaQ5QgZ74tQnyiXi-GfMF9iRDYx7m8rAXhMz0P8Hb00Kt1c1Wo8u4Ahz5FQCksi36DN1vHRVm8atfnU6lCeyYBfWwEL1EaX64xkxggmoHvnSAl5CW9BwTgt9RJqgnyuKF0rYyu_UY6DMlJY_nbqJylKmKAvBoubUHEVxolQtDA7cde_evnTWSkZKGRwb1M5WRFfn9VJiVUp2lERireWjD-JXv2_cNEt-QIDEe12vBlCIvMspJWnN_iV2wpc7xkgrFPK_rZ4cKMKx1DZlUjw3Ejwu1rGFdpDeGRmgalTyg40-v54e7UVXf6HWh1ZyMUfoshTpyYK4420y-unYTDzi_BhHIMp_xkbORkkumoZRoCdOFHHknKbNWlm4by5L-Cx_jViRfIdGCdQvC1FH2l861716lfqNwfl1QXznY7gb4Wok0yGRF6N7sFPWZe9ec0xbPhiBV_xqd2aKvGxqzqvzt-8CUUyqwTRQjbOkOHbZNq8eKtVU5zJxierfK4k44z31H7WoK41RlEdvXeYLqxud_DCcnw_Px5PXL1ebw4vLl1fDkbuNyHO5UkTcPl14vbhnyCPiCphltcfJjGFVNg8Ner38Iu5eTw_4-8P-R__9lzwe47zhwYeryolo1yG__c11wsY6X_jUmoMWFpgUuB5FMA9XtxhviRe6qF_wdwjokWLhPD3gnB4Yv_ah_HA9m8UilBFeCblyHjaUc2QWek7G3_yoYm0RxQ3lahxdn9xj8xXT7ze2ST9MdcpoGB7N4cOCY4hVjPx4k7rKLHh37FZ-QxewDGRd6dUhWwdL1m22__fAk7tlCM-t6E9jitIS_YfypFAWBe3xzOoJXpfiM6e0_gwOfTZ1m5ynJ1H3HfQd2kCbl"
+                    }
 
-                    authServicePort = component "AuthServicePort" "Contrato para hash de senha (bcrypt) e emissão/validação de token JWT." "Output Port (Interface)" "Core"
-                    usuarioRepoPort = component "UsuarioRepoPort" "Contrato de busca e persistência de Usuario, Aluno e Professor." "Output Port (Interface)" "Core"
-                    turmaRepoPort = component "TurmaRepoPort" "Contrato de busca e persistência de Turma e Matricula." "Output Port (Interface)" "Core"
-                    notaRepoPort = component "NotaRepoPort" "Contrato de busca e persistência de Nota." "Output Port (Interface)" "Core"
+                    authServicePort = component "AuthServicePort" "Contrato para hash de senha (bcrypt) e emissão/validação de token JWT." "Output Port (Interface)" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNqNVE1T1EAQvedXdC0XLCW4WFhWKpViRVawFCIBvXjpJL1himQ6zkxA_PgxlicP_or9Y87M7mIWFrBTlWTmve73MtOZHW1Qma6pA00GNLWo0LACyZICwy0YhpyN4QZKoagwgmWgz4V0xAZyLM4rxZ0sd7m2aWtjHz2GPsOSL4WsYIK1ph5StgKGL572Z2iCXW3GLM0hNgSDDKXOSInJYDUrE18Jhls9sLWGsKLMXNUEE65LUrfRlw-6XhBZ2QJz0jMft0neiNfLrV4PL2rU-mEtT9sntEr_Sb7fFirFl_eCzvGcsOWjR5BsVqzPyF03WX0Xz30EwXxNYKArCrEVYcGKwpaV0SF3JtRUdEqYqwF8C8CGkIbUBAuCUWfO7F5fiIJSS5_jLh5DRQrVPmpLkGe4rt097RRGoI2yvfUIIkgVN0JTPJtJetkFN861uiP5CfgpV35VvZy5JpTJTTsnfE5yvcWrmrGMwA_T2cilzwr1ki5cH4tikWjcva_XL-DTfgT-4Xd8CV1aGt3lq9SoQVGvAlq73B5J_UtfiWTXzKd7EqNX7w4Or0fp8dF4L8uOjv_hb08Pj_plbm5kGCbL9iPrThgCul4Tn7fE2dhIFlYiu4HSTH83gRUosHVHEHySsbY_fzTcTuI82eWS4IOgywgyoY39eHtKwGvSZvqLYU8XXKOCDRilB3cAy57jzTyJN51Aci00TOLC9Xq0tu3DikrjDksoEVyDe02N0z9ubPsNCiVaw5XCiZhhrs20_exqrm_nfBtoePPxBL7D3udOtATb9vV0vAvvO_EFy-nPeNMLLxwFOyRLd2L_BU4S6cI="
+                    }
+                    usuarioRepoPort = component "UsuarioRepoPort" "Contrato de busca e persistência de Usuario, Aluno e Professor." "Output Port (Interface)" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNqVVM1u00AQvvspRumlqCIlRUUoikxL1UIPQCEqF-AwWY_Dqusdsz9N-XuYihsST5EXY9aJK7e1WhgfYu9838w3k53Z8wFdiJXJPAXwVKPDwA4sW8oC1xAYZhwCV1BoRypotpk_0zYBK5ihOps7jrY4YCO0jaPGOgj_GQteaDuHEo2njqeoNYyePuqeUInRhCO24TVWBIMpWj8lp8tBP2qqvxGMdjrOWgThnKbhqyEo2RTkbnuf36u6BbKTAGvQ48ZugxohTb6Z5Ov4lUHv78_VwF4SSqZ_BN8tC53jxZ3OpHgN2GmsA7Acevqzn56bqK6KJ41l2bonMPBzGmKth4odDWt2wQ85hmH0EZ3mAXzPQEzbQK5ERXC6cryjmk8EvfYn2wKP5hzd5po7brEPYAwnjivtaXLOusg7lFn0Cp1EOi42dTEGH5zcwS5jHQR-gI3G9HIPK9TmTXyFQlbRoEQiG3Spldxp939BjU6TtllLudo8E0bz0sP98GlF-5k1PziTLKjC6p9vS--05yHoAlotnVPLMkE955SK6nMUrGIl9XGfc6UbWt1dhSth-yZaBroIZIs-mVtQtW28Hv9aFOlFSd7LjeqPtAbfvCzDYX4FHCetXrpNQCAbK8onZkJUWKftBR_txMveGI9288ksP-CC4L2mxRimiVShLBh4QT4sfzEcesUGnTRg_-S433FDy2R7lk-2U4L8KtEon6g0JuON3cYkqQ1pz0KBkGajyelx-Sd9y4C1JSx_W6VR6lBsvey8BidjsLyUjF5u2eGXqGuCXXk9PTqAt1FfYLG8nGw3-Voh2Z60Mu34v8Z6_YA="
+                    }
+                    turmaRepoPort = component "TurmaRepoPort" "Contrato de busca e persistência de Turma e Matricula." "Output Port (Interface)" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNqVVc1uEzEQvu9TjNpLECUloCK0iqKGqoVKgAopXIDDZD0JVh3PYntbfh8GcUPqU-TFGDs_3TTbpkwO68x8M_PNeGzv-4AuVBOTeQrgqUSHgR1YtpQFLiEwDDkEnoDSjoqg2Wb-TNsInMAQi7Ox48qqAzbitn2UpIbwn1HxhbZjGKHxVLOoUkPn6cO6hkZYmXDENrzGCcHWAK0fkNOjrWbUQH8n6DyqGUshhGMahG-GYMRGkVu3PtvIegFkJwHmoMdJ1kGJSMo3lHw1e2HQ-825EuwFoWS6I_h2WugcX9xqjIzngEdJagDLoaE__fi7jqqzeJIky-Y9gS0_pjaWul2wo3bJLvg2V6EdKjfBLfiRgYi2gdwIC4LTqH5LJZ8Icm6Nch88mnN0reSXz3D3IIcTxxPtqXvOWvVq8GHlC3QS5Vi1tMrBByezV_dIIeAn2MqYRs8DVnrMrSJ9FhF2oJQ5ZMUvKehz_p_ARsczdsoKfWsN_-HTOlQ4CGZE3rNrlYvV8c3V3BCkbyrLr1B8isrIKWxhVNw5zqzzS__WZLHKYancvBVLaF_6htcp7EDa2GZOS9eVpv7K0icdhNk81OblAWgFi1g17WwzmyxK-0KXRltssq5seiPgantWzSs0ryrZTHXeoSbTvFeNXrG7YhgyG0Jbp7B6ttrt3rxreazOy7AQkDTIerlU8QaPqwKavSRVgWV8HOCj7Xq5lvPOXq877MlhIniv6SKHQXSSvKJ4Tj5M_zAc-oINOuHfPzluNqxw6e4Oe93dGL63TNPpdYt4B-Xbe0kkpQ3xEQOFEC-elNHj9DL-l9trUcD0ry001qqIuNRiL8o47dPLWLKX8Tv8UumSYE-W744O4E2lv6Ka_u7uptQLTtk-WRXf0n_1G29A"
+                    }
+                    notaRepoPort = component "NotaRepoPort" "Contrato de busca e persistência de Nota." "Output Port (Interface)" "Core" {
+                        url "https://kroki.io/plantuml/svg/eNqVVMFuFDEMvc9XWNvLIsqULSpCo9GopWqhB6rCQi_AwZPxLlEzyZBk2tLSj0EckJA48gX7YzjpLg10aYv3sJn42X52bG86j9b3rcoceXDUoUVvLGijKfOmA2-gNt6bFhppSXhpdOaOpA7AFmoUR1Nret1sG8VmK7tREoT7gI05kXoKE1SOEk3TSRg9eZje0AR75XeN9vvYEgzGqN2YrJwMlqPG8oxgtJ4oOyaEUxr7T4pgYlRD9rr26a2sF0Bj2cEc9CjKdVAkEuPVHC_RC4XO3R4rwp4TcqQ7gm-mhdaakxuVgfEcsB4lAWjjl9RnK_z-RqUsHkfJsnlNYOCmlGMnc2Es5Z2x3uWm9zkb4gDOM2CR2pOdoCDY59tX1JkDxs2VQe6DQ3WMdhisioi6BwUcWNNKR-WxkU2VgNH3qOTZnfF17wRajrnXDGVTgPOW-zS1CB7gM-heqaWGL5BNRK9w2C5Oe__jSMkwfuxoS_Xa7LzubYtDDOcrN6vgw_W__b59f-nyIot_sUNi7kklH4BsYOEguU1oL1MfY3jcgnm3NQ_SFfFz5u2luABhJdd7Sfarl8YL20A6cEqfS_Hzoz0MsOE1cHisNK0_WiTPq8sMC-jIOq4iAYEw2vFiwIxNBHZhVcE7XTpeEsVooyrrats0BIeSTgoYB6MWeZvAM3J-9tXAjhNGoeW8tw72litSFuVaXZVrwXv1O8qoKkUYiGJlIwpH1D5sVGgQwhTEgA5nP8I3j9KC_-y7FhKTJAIOuSoSZ99mP8mxKnS14y7a-djLjmCDj292t-FlL0-xmX0p12LoBadsk3QTFvsvWnv7bg=="
+                    }
                 }
 
                 # Faixa 4: Driven Side (Adaptadores de Saída / Infraestrutura)
-                authAdapter = component "JwtBcryptAuthAdapter" "Implementa AuthServicePort com jsonwebtoken (JWT) e bcryptjs." "Driven Adapter / Security"
-                usuarioRepository = component "UsuarioRepository Adapter" "Implementa UsuarioRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
-                turmaRepository = component "TurmaRepository Adapter" "Implementa TurmaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
-                notaRepository = component "NotaRepository Adapter" "Implementa NotaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
+                authAdapter = component "JwtBcryptAuthAdapter" "Implementa AuthServicePort com jsonwebtoken (JWT) e bcryptjs." "Driven Adapter / Security" {
+                    url "https://kroki.io/plantuml/svg/eNrtVc1u00AQvvspRumlCEhJURGyLKtpaWl7QIEUuHAZ25Nkqb1jdtdNw8_DIA59kLwYs5u0uK1peQAmkmPv983M553Z8a51aFxTlZElB5ZqNOjYgGZNkeMaHEPGznEFhTKUO8U6smdKe2IFGeZnU8ONLva5FLeNw2Athp1hwXOlpzDB0lILKWoFg5fP2is0waZ0h6zdG6wIemPUdkxGTXrdrLH6SjDYboG1CMIpjd2iJJhwWZC5i-49qPqKyEYCrEnPg90lBSEhXyb5WnheorUP5wq0I0LJ9I_k-2WhMTy_F_SK14TtYC2CZtexP0P_u81qq3gRLIrWewI9O6U-1qqPBdaOjO1z4zIfso-Nm_XgWwRiSgs2wZxgKKtS6nOV04iNW-PeHsOUDJojtELQM9y0_jpqDMZgnZHWegQxjAxXylKyWklb3jlXXrT5i_MTCEs-fFe8jLkk1OltOad8RnqzxkXJWMQQHkerJ---CtRyOvdtrPIrR-ev7XztAMHtRxT-QsHhZO72crOond-m4WpLQVV1SRVpZ-_Zvafwee7GlBs53ndkBfDgopaTbY91F26xdO982ayguqkyOU__C_OnMG30Rs_aJuvKRhWqsguo5RwEZBRu2pk6i9_vpzeTxyB6lEYgmZA5F-GlIgmRi4NMbfikEyvzMh7spEmW7nNB8EHRPIaxsk50iRu8JuuWvxgObM4lGmmA4ei4G-hSlWxlabLls6TX2QZpkvsZEW_sBEtfkcNyRtaHvW5hXF768AVDGBjyzTBS_lwab_nTKPZcS1PpDr28RN85cPLxVF41CxLgOxx8aVRNsCO37w_34W2jLlB8k62Q_EpVtEu68F-738ZGWKg="
+                }
+                usuarioRepository = component "UsuarioRepository Adapter" "Implementa UsuarioRepoPort com persistência relacional SQL." "Driven Adapter / SQL" {
+                    url "https://kroki.io/plantuml/svg/eNrlVs1O20AQvvspRuGSihIaKqoqilxoCC1Sf4BALxRVY3uSrFjvmt01If17l6qHSn2NvFhnHQcccKGcOznE3vlm5tvZmVlvWYfG5akMLDmwlKFBpw0orShwOgOnIdLO6RQSYSh2QqvAngnlgSlEGJ-NjM5V0tOSzVZ2C6kg7BgTPRFqBEOUliqaJBPQfv6kukJDzKXb1cq9w5SgMUBlB2TEsFGPGojPBO2NijJjQjiigZtKgqGWCZnb2pf3sl4AtWEHJehpIbdBBZEiXsTxKvpYorX3xypgrwk50j-C76aFxujJnUrPuARsFFIBKO1q8rPtfzdRVRbPCgmCMifQsCNqYSZamGDmyNiWzl3kXbYyfhPWkYqpldscjdAN-BIAi1AMHWJMcDxXHFKm97Vxpd7LKliUF2iapW1ngX0EHdg3OhWWuhdaJGHFJMptjIY97SVNkXTAOsMlWbUoncBXULmUtbb9FIV8n79FNo5zieyJlBNDEXOJm4c5lcI3XpNzMRTyBVsUDzW2J6dzs29B8VecPwzOZSVBVnDHTkGkmaSUGdk7srcGScRBdtBhhJZ6UrDB_57beWJSzA715Ej3Oa6bNrlPrrbP6968fKuex3XFLqd0qWDPczLT7lHYtOdysZXHUHSSZX65OlN6ok5OqxSPquRWgS4pzh09xMP1OS3VzvWWKhy_g0hg4biyqjSP4Zp18sdVp0h0nPsa1HVKS2qMn8Zox3Xa-Xkta0rmtfW-thZCo924mfhOmSuEwcGbv1u3WmE1FR1__CQQDI24fIwOOHTMo4vvO_ioupZvmk57M-xGYU8nBB8EcXkM_BxLka8keEXWzX5q6NtYSzRcT9v7e_WK22S250Oyux6F3XUfKrwK2Q67sR-xnZXNQsIdcijHZL3vq5bH2S8fI9FQzFvfM5ztmMft7IdvEk6Fx5ejd_ZbxaJgzX1eACy3Uf88FxnBJj8e7_bgIBeXyObd9SL-gliwRSrx3wt_AOXTwb0="
+                }
+                turmaRepository = component "TurmaRepository Adapter" "Implementa TurmaRepoPort com persistência relacional SQL." "Driven Adapter / SQL" {
+                    url "https://kroki.io/plantuml/svg/eNrtVs1uGzcQvu9TDJSLitZylcJFsBC2UZ04MdAGTuXkkgbG7HKkEOaSa5JrxenPuwQ9BAiQp9CLZUhJ65W8st1rUeogivPNzKePQw4fO4_W16VKHHlwVKFFbyxooynxpgJvIDfemxKEtFR4aXTizqUOwBJyLM5n1tRaHBrFbg-O4mgh3DsUZi71DKaoHLUsopIwfPR9e4WmWCt_ZLR_gSVBb4LaTcjKaa8bNZEfCIYPW8aKCeGMJv5KEUyNEmRvWn--k_UaaCwHWIF-iOMmKBKJ-XLO17IXCp27O1eEPSfkTPcE304LrTXzW42B8QrwMI4WQBvfoc84fLZRbRY_xpEkK02g52Y0wEoOUGDlybqBqX0eQg4q_iWdJ13QwNe2xB78kQAPqRk4xYLgNCz_RpU5MdavrGF8Cw7VJdp-9EuXuG8ghRNrSulodGmkyFrwvHYFWo5yLPpSpOC85VJse8QQ8CfoWqm2p5LhZJwaga5_A__m7U0oJ2HMlJwztl-tZ8e7k-4IMla1Nr8i-xS14rPTx7Bw7zhLgRr_frmepdAs3q1YAx17eYnbFL6DqH83p8Z1Q9S_kvgVyxcmF6rZYSf5urkCWVaKStLe7dz8PRA553mCHnN0dKgkw_8vjf9KaVyf_s0d3jj-FzXZq9Fp1ncX6jplvJPcTynU-lybuX7zdkOJTRXoPRW1p38T4VqIjTJeFqqZtxj-DVLAOmxrtTBCzkyXRUhXyEpJjV1WviulEeZMEYvd6d-U09l25g2ujfT34xt39azbFjd4hw1DTbBB12XOnbdFo-PM7-1l0Bv2tvc7XW0RwuTlL7t8B4PsWv8USqxI4pLabS4bMjRu4SAsvoTlhNkW3LD4lQO_65Hj90U6PMhGeXZoBMFrSfMUJqF78c3AC8_I-cU_Bp66wii0fEeNT467Ddt0xsvGONrPs9F-SJQ1CYfZqAhtNX1wEEf2hDyqd-RC5OamxMWnkEEYiD2W7wPLD7iCW-ziI1dNUC_gV-128VkXMnKOIjmg1t92fCCfXtSyIjjg6aujQ3hZy_fIkUb7kcqaY_KYtAjPxa_m2mWt"
+                }
+                notaRepository = component "NotaRepository Adapter" "Implementa NotaRepoPort com persistência relacional SQL." "Driven Adapter / SQL" {
+                    url "https://kroki.io/plantuml/svg/eNrtVs1O20AQvvspRuGSqiU0VFSVZbmkIbRILQJCe6GoGtuTsGK9a3bXhNCfd6l6qNTXyIt11iTEQPjrueODNzvfzHye2ZnNunVoXJnLwJIDSwUadNqA0ooCpwtwGhLtnM4hE4ZSJ7QK7LFQHphDgunx0OhSZV0t2Wxps5Iawh5hpkdCDWGA0lJNkxUC2q-e13dogKV0m1q5bcwJGn1Utk9GDBqLUX1xTtBerSkLJoRD6ruxJBhomZG5qX1zL-sZUBt2MAW9qOQmqCJSxUs4Xk2fSrT2_lgV7B0hR3og-G5aaIwe3an0jKeA1UpqAKXdgvx0_HMdVWfxspIgmOYEGnZILSxECzMsHBnb0qVLvMtWwb-EdaRSarEfbMDXAFiEYtwAU4Jt3t2jQu9o46ZKL0_BojxF0_RWYYV6AiHsGJ0LS9GpFllcA6MrUYrzB-OT0qZoOOZW1hRZCNYZPrZ1C-8BvoEqpVxo-AHZJC0lNvPZausxjqTw3ciOOrJUurdfmhyb6NdzN8_A-e3b_R4cXrj8HlSv6sBA_0TOkmoF9_cYRF5Iykk5e1u6lyFL2PcGOkzQUlcKRv8vxj8V4yKfORZ7erSve8oJN25yJ14kgje9oV_WSzdviKs1uNISJyWZcbQfN-2JnNOqutS-DqFUx0qP1MFhndl-ndZToDNKS0eP8TAv15VjNv2YGsEfIDKYea3tXtbky2L9KfqxEnJV8oRHeC3SzaO8vBxDo924nqVw-mEI_d33t5i2WvEl6dDXhwSCoSHX3uiAI6Y8vfjKg88qsnzZhO21OErirs4IPgni-vX9KMuRbyV4S9ZNfmno2VRLNFzwzs7WYsU1Gp2LIRmtJHG04uPEl_HacZT6ERsurVUSb5BDeUTWO75sYpz89gEyDdW85SvX8GWe8rid_DRC-wx4_HT0Tv6oVFSUfTNaPvy9k1IUBGu8_LjZhd1SnCGbRitV7BmpYJ1U5v8r_AX4QbvA"
+                }
             }
 
             database = container "Banco de Dados" "Armazena dados cadastrais de usuários, turmas, matrículas e notas." "PostgreSQL / SQLite" "Database"
@@ -77,11 +105,6 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
     }
 
     views {
-        properties {
-            "kroki.url" "https://kroki.io"
-            "kroki.format" "png"
-        }
-
         systemContext sistemaEscolar "SystemContext" {
             include *
             autoLayout lr
@@ -95,80 +118,6 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
         component apiBackend "Components" {
             include *
             autoLayout lr 300 180
-        }
-
-        # ------------------------------------------------------------
-        # Nível 4 (C4) - Código PlantUML (.puml) de cada Componente
-        # Compatível com Structurizr Playground (web) e Structurizr Local
-        # ------------------------------------------------------------
-        image authController "CodeAuthController" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/auth-controller.puml"
-            title "Code View: AuthController"
-        }
-
-        image academicoController "CodeAcademicoController" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/academico-controller.puml"
-            title "Code View: AcademicoController"
-        }
-
-        image avaliacaoController "CodeAvaliacaoController" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/avaliacao-controller.puml"
-            title "Code View: AvaliacaoController"
-        }
-
-        image securityComponent "CodeSecurityAuthCore" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/security-auth-core.puml"
-            title "Code View: Security & Auth Core"
-        }
-
-        image academicoCore "CodeGestaoAcademicaCore" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/gestao-academica-core.puml"
-            title "Code View: Gestão Acadêmica Core"
-        }
-
-        image avaliacaoCore "CodeAvaliacaoNotasCore" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/avaliacao-notas-core.puml"
-            title "Code View: Avaliação e Notas Core"
-        }
-
-        image authServicePort "CodeAuthServicePort" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/auth-service-port.puml"
-            title "Code View: AuthServicePort"
-        }
-
-        image usuarioRepoPort "CodeUsuarioRepoPort" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/usuario-repo-port.puml"
-            title "Code View: UsuarioRepoPort"
-        }
-
-        image turmaRepoPort "CodeTurmaRepoPort" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/turma-repo-port.puml"
-            title "Code View: TurmaRepoPort"
-        }
-
-        image notaRepoPort "CodeNotaRepoPort" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/nota-repo-port.puml"
-            title "Code View: NotaRepoPort"
-        }
-
-        image authAdapter "CodeJwtBcryptAuthAdapter" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/jwt-bcrypt-auth-adapter.puml"
-            title "Code View: JwtBcryptAuthAdapter"
-        }
-
-        image usuarioRepository "CodeUsuarioRepositoryAdapter" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/usuario-repository-adapter.puml"
-            title "Code View: UsuarioRepository Adapter"
-        }
-
-        image turmaRepository "CodeTurmaRepositoryAdapter" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/turma-repository-adapter.puml"
-            title "Code View: TurmaRepository Adapter"
-        }
-
-        image notaRepository "CodeNotaRepositoryAdapter" {
-            kroki "plantuml" "https://raw.githubusercontent.com/cicerocarnauba/sistema-gestao-escolar/main/docs/code/nota-repository-adapter.puml"
-            title "Code View: NotaRepository Adapter"
         }
 
         styles {
