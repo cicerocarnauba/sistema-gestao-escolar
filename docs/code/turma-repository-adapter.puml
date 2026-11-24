@@ -22,6 +22,7 @@ package "sge.api.adapters.outbound.persistence.turma" {
     interface TurmaRepoPort {
         + salvar(turma: Turma) : Promise<void>
         + buscarPorId(id: string) : Promise<Turma | null>
+        + buscarPorCodigo(codigo: string, periodoLetivo: string) : Promise<Turma | null>
         + listarTodas() : Promise<Turma[]>
         + listarPorProfessor(professorId: string) : Promise<Turma[]>
         + listarPorAlunoMatriculado(alunoId: string) : Promise<Turma[]>
@@ -29,10 +30,11 @@ package "sge.api.adapters.outbound.persistence.turma" {
         + buscarMatriculaAtiva(alunoId: string, turmaId: string) : Promise<Matricula | null>
     }
 
-    class SqlTurmaRepository implements TurmaRepoPort {
+    class TurmaRepositoryAdapter implements TurmaRepoPort {
         - db : DatabaseClient
         + salvar(turma: Turma) : Promise<void>
         + buscarPorId(id: string) : Promise<Turma | null>
+        + buscarPorCodigo(codigo: string, periodoLetivo: string) : Promise<Turma | null>
         + listarTodas() : Promise<Turma[]>
         + listarPorProfessor(professorId: string) : Promise<Turma[]>
         + listarPorAlunoMatriculado(alunoId: string) : Promise<Turma[]>
@@ -60,10 +62,10 @@ package "sge.api.adapters.outbound.persistence.turma" {
         ~ ativa : number
     }
 
-    SqlTurmaRepository --> "1" DatabaseClient : executa SQL
-    SqlTurmaRepository ..> TurmaRow : mapeia turma
-    SqlTurmaRepository ..> MatriculaRow : mapeia matrícula
+    TurmaRepositoryAdapter --> "1" DatabaseClient : executa SQL
+    TurmaRepositoryAdapter ..> TurmaRow : mapeia turma
+    TurmaRepositoryAdapter ..> MatriculaRow : mapeia matrícula
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - TurmaRepository Adapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de turmas e matrículas | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - TurmaRepositoryAdapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de turmas e matrículas | Equipe 5 | UFC Quixadá</color></size>
 @enduml

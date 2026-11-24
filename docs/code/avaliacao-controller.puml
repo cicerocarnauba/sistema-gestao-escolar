@@ -20,7 +20,7 @@ skinparam noteBorderColor #666666
 
 package "sge.api.adapters.inbound.http.avaliacao" {
     interface LancarNotaPort {
-        + executar(comando: LancarNotaComando) : Promise<Nota>
+        + executar(input: LancarNotaInput) : Promise<Nota>
     }
 
     interface ConsultarBoletimPort {
@@ -35,9 +35,10 @@ package "sge.api.adapters.inbound.http.avaliacao" {
         + getBoletim(req: Request, res: Response) : Promise<void>
     }
 
-    class LancarNotaRequestDTO {
-        + turmaId : string
+    class LancarNotaInput {
+        + professorId : string
         + alunoId : string
+        + turmaId : string
         + valor : number
     }
 
@@ -51,7 +52,7 @@ package "sge.api.adapters.inbound.http.avaliacao" {
 
     AvaliacaoController ..> LancarNotaPort : POST/PUT /notas (RF08)
     AvaliacaoController ..> ConsultarBoletimPort : GET /boletim (RF10)
-    AvaliacaoController ..> LancarNotaRequestDTO : extrai payload
+    AvaliacaoController ..> LancarNotaInput : monta entrada
     AvaliacaoController ..> BoletimResponseDTO : serializa JSON
 }
 

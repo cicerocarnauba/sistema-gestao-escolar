@@ -20,23 +20,23 @@ skinparam noteBorderColor #666666
 
 package "sge.api.adapters.inbound.http.academico" {
     interface CadastrarUsuarioPort {
-        + executar(input: CadastrarUsuarioInput) : Promise<UsuarioResumoOutput>
+        + executar(input: CadastrarUsuarioInput) : Promise<Usuario>
     }
 
     interface ListarUsuariosPort {
-        + executar(filtroPerfil?: Perfil) : Promise<UsuarioResumoOutput[]>
+        + executar(filtroPerfil?: Perfil) : Promise<Usuario[]>
     }
 
     interface CriarTurmaPort {
-        + executar(input: CriarTurmaInput) : Promise<TurmaResumoOutput>
+        + executar(input: CriarTurmaInput) : Promise<Turma>
     }
 
     interface ConsultarTurmasPort {
-        + executar(filtro: ConsultarTurmasFiltro) : Promise<TurmaResumoOutput[]>
+        + executar(input: ConsultarTurmasInput) : Promise<Turma[]>
     }
 
     interface MatricularAlunoPort {
-        + executar(input: MatricularAlunoInput) : Promise<MatriculaOutput>
+        + executar(input: MatricularAlunoInput) : Promise<Matricula>
     }
 
     class AcademicoController {

@@ -20,17 +20,17 @@ skinparam noteBorderColor #666666
 
 package "sge.api.core.avaliacao" {
     interface LancarNotaPort {
-        + executar(comando: LancarNotaComando) : Promise<Nota>
+        + executar(input: LancarNotaInput) : Promise<Nota>
     }
 
     interface ConsultarBoletimPort {
         + executar(alunoId: string) : Promise<Boletim[]>
     }
 
-    class LancarNotaService implements LancarNotaPort {
+    class LancarNotaUseCase implements LancarNotaPort {
         - turmaRepo : TurmaRepoPort
         - notaRepo : NotaRepoPort
-        + executar(comando: LancarNotaComando) : Promise<Nota>
+        + executar(input: LancarNotaInput) : Promise<Nota>
     }
 
     class ConsultarBoletimUseCase implements ConsultarBoletimPort {
@@ -39,7 +39,7 @@ package "sge.api.core.avaliacao" {
         + executar(alunoId: string) : Promise<Boletim[]>
     }
 
-    class LancarNotaComando {
+    class LancarNotaInput {
         + professorId : string
         + alunoId : string
         + turmaId : string
@@ -69,8 +69,8 @@ package "sge.api.core.avaliacao" {
         REPROVADO
     }
 
-    LancarNotaService ..> LancarNotaComando : recebe
-    LancarNotaService ..> Nota : valida 0..10 (RN01, RN02, RN04)
+    LancarNotaUseCase ..> LancarNotaInput : recebe
+    LancarNotaUseCase ..> Nota : valida 0..10 (RN01, RN02, RN04)
     ConsultarBoletimUseCase ..> Boletim : calcula média (RN05)
     Boletim ..> Nota : agrega valores
     Boletim --> SituacaoBoletim : define

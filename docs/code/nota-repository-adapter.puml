@@ -27,7 +27,7 @@ package "sge.api.adapters.outbound.persistence.nota" {
         + listarPorAlunoETurma(alunoId: string, turmaId: string) : Promise<Nota[]>
     }
 
-    class SqlNotaRepository implements NotaRepoPort {
+    class NotaRepositoryAdapter implements NotaRepoPort {
         - db : DatabaseClient
         + salvar(nota: Nota) : Promise<void>
         + atualizar(nota: Nota) : Promise<void>
@@ -48,9 +48,9 @@ package "sge.api.adapters.outbound.persistence.nota" {
         ~ valor : number
     }
 
-    SqlNotaRepository --> "1" DatabaseClient : executa SQL
-    SqlNotaRepository ..> NotaRow : mapeia registro
+    NotaRepositoryAdapter --> "1" DatabaseClient : executa SQL
+    NotaRepositoryAdapter ..> NotaRow : mapeia registro
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - NotaRepository Adapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de notas | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - NotaRepositoryAdapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de notas | Equipe 5 | UFC Quixadá</color></size>
 @enduml

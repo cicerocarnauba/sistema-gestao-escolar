@@ -19,7 +19,7 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
                 # Faixas 2 e 3: Núcleo Hexagonal (Casos de Uso, Domínio e Portas)
                 group "Núcleo Hexagonal (Casos de Uso, Domínio e Portas)" {
                     securityComponent = component "Security & Auth Core" "Porta AutenticarUsuarioPort; valida credenciais e perfil de acesso com a entidade Usuario." "Input Port / Use Case" "Core"
-                    academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuario, CriarTurma, MatricularAluno e Consultas; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Input Ports / Domain" "Core"
+                    academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuarioPort, ListarUsuariosPort, CriarTurmaPort, ConsultarTurmasPort e MatricularAlunoPort; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Input Ports / Domain" "Core"
                     avaliacaoCore = component "Avaliação e Notas Core" "Portas LancarNotaPort e ConsultarBoletimPort; entidades Nota e Boletim e regras RN01, RN02, RN04 e RN05." "Input Ports / Domain" "Core"
 
                     authServicePort = component "AuthServicePort" "Contrato para hash de senha (bcrypt) e emissão/validação de token JWT." "Output Port (Interface)" "Core"
@@ -30,9 +30,9 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
 
                 # Faixa 4: Driven Side (Adaptadores de Saída / Infraestrutura)
                 authAdapter = component "JwtBcryptAuthAdapter" "Implementa AuthServicePort com jsonwebtoken (JWT) e bcryptjs." "Driven Adapter / Security"
-                usuarioRepository = component "UsuarioRepository Adapter" "Implementa UsuarioRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
-                turmaRepository = component "TurmaRepository Adapter" "Implementa TurmaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
-                notaRepository = component "NotaRepository Adapter" "Implementa NotaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
+                usuarioRepository = component "UsuarioRepositoryAdapter" "Implementa UsuarioRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
+                turmaRepository = component "TurmaRepositoryAdapter" "Implementa TurmaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
+                notaRepository = component "NotaRepositoryAdapter" "Implementa NotaRepoPort com persistência relacional SQL." "Driven Adapter / SQL"
             }
 
             database = container "Banco de Dados" "Armazena dados cadastrais de usuários, turmas, matrículas e notas." "PostgreSQL / SQLite" "Database"
@@ -158,17 +158,17 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
 
         image usuarioRepository "CodeUsuarioRepositoryAdapter" {
             kroki "plantuml" "code/usuario-repository-adapter.puml"
-            title "Code View: UsuarioRepository Adapter"
+            title "Code View: UsuarioRepositoryAdapter"
         }
 
         image turmaRepository "CodeTurmaRepositoryAdapter" {
             kroki "plantuml" "code/turma-repository-adapter.puml"
-            title "Code View: TurmaRepository Adapter"
+            title "Code View: TurmaRepositoryAdapter"
         }
 
         image notaRepository "CodeNotaRepositoryAdapter" {
             kroki "plantuml" "code/nota-repository-adapter.puml"
-            title "Code View: NotaRepository Adapter"
+            title "Code View: NotaRepositoryAdapter"
         }
 
         styles {

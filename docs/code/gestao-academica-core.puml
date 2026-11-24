@@ -19,18 +19,46 @@ skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
 package "sge.api.core.academico" {
+    interface CadastrarUsuarioPort {
+        + executar(input: CadastrarUsuarioInput) : Promise<Usuario>
+    }
+
+    interface ListarUsuariosPort {
+        + executar(filtroPerfil?: Perfil) : Promise<Usuario[]>
+    }
+
     interface CriarTurmaPort {
         + executar(input: CriarTurmaInput) : Promise<Turma>
+    }
+
+    interface ConsultarTurmasPort {
+        + executar(input: ConsultarTurmasInput) : Promise<Turma[]>
     }
 
     interface MatricularAlunoPort {
         + executar(input: MatricularAlunoInput) : Promise<Matricula>
     }
 
+    class CadastrarUsuarioUseCase implements CadastrarUsuarioPort {
+        - usuarioRepo : UsuarioRepoPort
+        - authService : AuthServicePort
+        + executar(input: CadastrarUsuarioInput) : Promise<Usuario>
+    }
+
+    class ListarUsuariosUseCase implements ListarUsuariosPort {
+        - usuarioRepo : UsuarioRepoPort
+        + executar(filtroPerfil?: Perfil) : Promise<Usuario[]>
+    }
+
     class CriarTurmaUseCase implements CriarTurmaPort {
         - turmaRepo : TurmaRepoPort
         - usuarioRepo : UsuarioRepoPort
         + executar(input: CriarTurmaInput) : Promise<Turma>
+    }
+
+    class ConsultarTurmasUseCase implements ConsultarTurmasPort {
+        - turmaRepo : TurmaRepoPort
+        + executar(input: ConsultarTurmasInput) : Promise<Turma[]>
     }
 
     class MatricularAlunoUseCase implements MatricularAlunoPort {
@@ -74,7 +102,10 @@ package "sge.api.core.academico" {
         + encerrar() : void
     }
 
-    CriarTurmaUseCase ..> Turma : instancia e vincula titular
+    CadastrarUsuarioUseCase ..> Usuario : cria Aluno / Professor
+    ListarUsuariosUseCase ..> Usuario : consulta
+    CriarTurmaUseCase ..> Turma : cria e vincula titular
+    ConsultarTurmasUseCase ..> Turma : filtra por perfil
     MatricularAlunoUseCase ..> Matricula : garante unicidade (RN03)
     Turma "*" --> "1" Professor : tem titular
     Matricula "*" --> "1" Aluno : vincula
