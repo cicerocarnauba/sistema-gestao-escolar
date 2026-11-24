@@ -56,5 +56,5 @@ package "AvaliacaoController" as pkg_avaliacao_controller {
     AvaliacaoController ..> BoletimResponseDTO : serializa JSON
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - AvaliacaoController</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador REST para lançamento de notas e consulta do boletim | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - AvaliacaoController</b></size>
 @enduml

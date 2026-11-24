@@ -80,6 +80,7 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
         properties {
             "kroki.url" "https://kroki.io"
             "kroki.format" "png"
+            "structurizr.metadata" "false"
         }
 
         systemContext sistemaEscolar "SystemContext" {
@@ -103,72 +104,72 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
         # ------------------------------------------------------------
         image authController "CodeAuthController" {
             kroki "plantuml" "code/auth-controller.puml"
-            title "Code View: AuthController"
+            title "Code View: Sistema de Gestão Escolar - AuthController"
         }
 
         image academicoController "CodeAcademicoController" {
             kroki "plantuml" "code/academico-controller.puml"
-            title "Code View: AcademicoController"
+            title "Code View: Sistema de Gestão Escolar - AcademicoController"
         }
 
         image avaliacaoController "CodeAvaliacaoController" {
             kroki "plantuml" "code/avaliacao-controller.puml"
-            title "Code View: AvaliacaoController"
+            title "Code View: Sistema de Gestão Escolar - AvaliacaoController"
         }
 
         image securityComponent "CodeSecurityAuthCore" {
             kroki "plantuml" "code/security-auth-core.puml"
-            title "Code View: Security & Auth Core"
+            title "Code View: Sistema de Gestão Escolar - Security & Auth Core"
         }
 
         image academicoCore "CodeGestaoAcademicaCore" {
             kroki "plantuml" "code/gestao-academica-core.puml"
-            title "Code View: Gestão Acadêmica Core"
+            title "Code View: Sistema de Gestão Escolar - Gestão Acadêmica Core"
         }
 
         image avaliacaoCore "CodeAvaliacaoNotasCore" {
             kroki "plantuml" "code/avaliacao-notas-core.puml"
-            title "Code View: Avaliação e Notas Core"
+            title "Code View: Sistema de Gestão Escolar - Avaliação e Notas Core"
         }
 
         image authServicePort "CodeAuthServicePort" {
             kroki "plantuml" "code/auth-service-port.puml"
-            title "Code View: AuthServicePort"
+            title "Code View: Sistema de Gestão Escolar - AuthServicePort"
         }
 
         image usuarioRepoPort "CodeUsuarioRepoPort" {
             kroki "plantuml" "code/usuario-repo-port.puml"
-            title "Code View: UsuarioRepoPort"
+            title "Code View: Sistema de Gestão Escolar - UsuarioRepoPort"
         }
 
         image turmaRepoPort "CodeTurmaRepoPort" {
             kroki "plantuml" "code/turma-repo-port.puml"
-            title "Code View: TurmaRepoPort"
+            title "Code View: Sistema de Gestão Escolar - TurmaRepoPort"
         }
 
         image notaRepoPort "CodeNotaRepoPort" {
             kroki "plantuml" "code/nota-repo-port.puml"
-            title "Code View: NotaRepoPort"
+            title "Code View: Sistema de Gestão Escolar - NotaRepoPort"
         }
 
         image authAdapter "CodeJwtBcryptAuthAdapter" {
             kroki "plantuml" "code/jwt-bcrypt-auth-adapter.puml"
-            title "Code View: JwtBcryptAuthAdapter"
+            title "Code View: Sistema de Gestão Escolar - JwtBcryptAuthAdapter"
         }
 
         image usuarioRepository "CodeUsuarioRepositoryAdapter" {
             kroki "plantuml" "code/usuario-repository-adapter.puml"
-            title "Code View: UsuarioRepositoryAdapter"
+            title "Code View: Sistema de Gestão Escolar - UsuarioRepositoryAdapter"
         }
 
         image turmaRepository "CodeTurmaRepositoryAdapter" {
             kroki "plantuml" "code/turma-repository-adapter.puml"
-            title "Code View: TurmaRepositoryAdapter"
+            title "Code View: Sistema de Gestão Escolar - TurmaRepositoryAdapter"
         }
 
         image notaRepository "CodeNotaRepositoryAdapter" {
             kroki "plantuml" "code/nota-repository-adapter.puml"
-            title "Code View: NotaRepositoryAdapter"
+            title "Code View: Sistema de Gestão Escolar - NotaRepositoryAdapter"
         }
 
         styles {

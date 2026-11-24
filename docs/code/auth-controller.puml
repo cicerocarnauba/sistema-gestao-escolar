@@ -54,5 +54,5 @@ package "AuthController" as pkg_auth_controller {
     AuthMiddleware ..> AuthServicePort : valida Bearer JWT (RF02)
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - AuthController</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador de entrada REST de autenticação e autorização RBAC | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - AuthController</b></size>
 @enduml

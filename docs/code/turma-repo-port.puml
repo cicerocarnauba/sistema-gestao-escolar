@@ -49,5 +49,5 @@ package "TurmaRepoPort" as pkg_turma_repo_port {
     TurmaRepoPort ..> Matricula : persiste e consulta
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - TurmaRepoPort</b></size>\n<size:11><color:#555555>Contrato da porta de saída para persistência e consulta de turmas e matrículas | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - TurmaRepoPort</b></size>
 @enduml

@@ -112,5 +112,5 @@ package "Gestão Acadêmica Core" as pkg_gestao_academica_core {
     Matricula "*" --> "1" Turma : vincula
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - Gestão Acadêmica Core</b></size>\n<size:11><color:#555555>Detalhes de implementação das entidades acadêmicas e casos de uso de usuários, turmas e matrículas | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - Gestão Acadêmica Core</b></size>
 @enduml

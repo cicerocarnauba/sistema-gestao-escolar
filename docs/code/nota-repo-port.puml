@@ -38,5 +38,5 @@ package "NotaRepoPort" as pkg_nota_repo_port {
     NotaRepoPort ..> Nota : persiste e consulta
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - NotaRepoPort</b></size>\n<size:11><color:#555555>Contrato da porta de saída para persistência e consulta de avaliações e notas | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - NotaRepoPort</b></size>
 @enduml

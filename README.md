@@ -66,8 +66,8 @@ O foco é centralizar o fluxo acadêmico básico entre secretaria, professores e
 A aplicação segue a **Arquitetura Hexagonal (Ports and Adapters)**, isolando as regras acadêmicas de frameworks e do banco de dados.
 
 - **Domínio (núcleo):** entidades e invariantes de negócio (`Aluno`, `Professor`, `Turma`, `Matrícula`, `Nota`), sem dependência de framework web ou driver de banco.
-- **Portas de entrada (Input / Driving Ports):** contratos dos casos de uso (ex.: `CriarTurmaPort`, `MatricularAlunoPort`, `LancarNotaPort`, `ConsultarBoletimPort`, `ConsultarTurmasPort`), acionados por adaptadores primários (Controllers REST).
-- **Portas de saída (Output / Driven Ports):** interfaces de persistência e autenticação (ex.: `UsuarioRepoPort`, `AuthServicePort`, `TurmaRepoPort`, `MatriculaRepoPort`, `NotaRepoPort`), implementadas por adaptadores secundários (banco relacional e serviço JWT).
+- **Portas de entrada (Input / Driving Ports):** contratos dos casos de uso (`AutenticarUsuarioPort`, `CadastrarUsuarioPort`, `ListarUsuariosPort`, `CriarTurmaPort`, `ConsultarTurmasPort`, `MatricularAlunoPort`, `LancarNotaPort` e `ConsultarBoletimPort`), acionados por adaptadores primários (Controllers REST).
+- **Portas de saída (Output / Driven Ports):** interfaces de persistência e autenticação (`AuthServicePort`, `UsuarioRepoPort`, `TurmaRepoPort` e `NotaRepoPort`), implementadas por adaptadores secundários (`JwtBcryptAuthAdapter`, `UsuarioRepositoryAdapter`, `TurmaRepositoryAdapter` e `NotaRepositoryAdapter`).
 
 ### Containers (C4 — nível 2)
 
@@ -90,13 +90,23 @@ A aplicação segue a **Arquitetura Hexagonal (Ports and Adapters)**, isolando a
 
 ### Diagramas (C4)
 
-Os códigos-fonte dos diagramas ficam em [`docs/`](docs/) e as imagens renderizadas em [`docs/img/`](docs/img/), exibidas diretamente abaixo:
+Os códigos-fonte dos diagramas ficam em [`docs/`](docs/) e as imagens estáticas em [`docs/img/`](docs/img/):
+
+- **Structurizr Local (interativo, com drill-down C1 → C2 → C3 → C4 dentro do próprio Structurizr):** [`docs/workspace.dsl`](docs/workspace.dsl)
+  ```bash
+  docker run -it --rm -p 8080:8080 -u "$(id -u):$(id -g)" -v "$PWD/docs:/usr/local/structurizr" structurizr/structurizr:latest local
+  ```
+  Acesse `http://localhost:8080` e clique duas vezes em qualquer componente do C3 para abrir seu diagrama de código (C4).
+- **Structurizr Playground Web (sem instalação):** copie e cole [`docs/workspace-web.dsl`](docs/workspace-web.dsl) em [playground.structurizr.com](https://playground.structurizr.com) — o duplo clique em cada componente do C3 abre o respectivo diagrama de código (SVG) em uma nova aba.
+- **Fontes C4 (PlantUML):** os 14 diagramas de código (um por componente do C3) estão em [`docs/code/`](docs/code/).
+
+Checklist dos níveis C4:
 
 - [x] **Nível 1 — Contexto** ([PNG](docs/img/contexto.png) · [Google Drive](https://drive.google.com/file/d/1yu138ALJhnlcqqYpGP0vzdT3wPmIysaD/view?usp=sharing) · [DSL](docs/workspace.dsl))
 - [x] **Nível 2 — Containers** ([PNG](docs/img/containers.png) · [Google Drive](https://drive.google.com/file/d/1UgPXfaxJO6yNx2u8hJ4T4mLIaPUNipiF/view?usp=sharing) · [DSL](docs/workspace.dsl))
 - [x] **Nível 3 — Componentes** ([SVG](docs/img/componentes.svg) · [PNG](docs/img/componentes.png) · [DSL](docs/workspace.dsl))
-- [x] **Nível 4 — Código (Entidades e Regras de Domínio)** ([SVG](docs/img/codigo-dominio.svg) · [PNG](docs/img/codigo-dominio.png) · [Mermaid `.mmd`](docs/codigo-dominio.mmd))
-- [x] **Nível 4 — Código (Caso de Uso `LancarNotaPort`)** ([SVG](docs/img/codigo-lancar-nota.svg) · [PNG](docs/img/codigo-lancar-nota.png) · [Mermaid `.mmd`](docs/codigo-lancar-nota.mmd))
+- [x] **Nível 4 — Código (14 componentes em PlantUML)** ([`docs/code/`](docs/code/) · [DSL Local](docs/workspace.dsl) · [DSL Web](docs/workspace-web.dsl))
+- [x] **Nível 4 — Código (visões estáticas em Mermaid)** ([Entidades](docs/img/codigo-dominio.svg) · [`LancarNotaPort`](docs/img/codigo-lancar-nota.svg))
 
 #### C1 — Diagrama de Contexto
 
@@ -124,7 +134,9 @@ Os códigos-fonte dos diagramas ficam em [`docs/`](docs/) e as imagens renderiza
 .
 ├── README.md
 ├── docs/
-│   ├── workspace.dsl                 # Fonte Structurizr DSL (C1, C2 e C3)
+│   ├── workspace.dsl                 # Structurizr DSL — Local (C1, C2, C3 e 14 Image Views C4)
+│   ├── workspace-web.dsl             # Structurizr DSL — Playground Web (links C4 via Kroki)
+│   ├── code/                         # 14 diagramas de código C4 em PlantUML (.puml)
 │   ├── codigo-dominio.mmd            # Fonte Mermaid C4 — Entidades e Regras de Domínio
 │   ├── codigo-lancar-nota.mmd        # Fonte Mermaid C4 — Caso de Uso LancarNotaPort
 │   └── img/                          # Imagens exportadas dos diagramas (PNG e SVG)

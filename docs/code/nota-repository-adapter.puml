@@ -52,5 +52,5 @@ package "NotaRepositoryAdapter" as pkg_nota_repository_adapter {
     NotaRepositoryAdapter ..> NotaRow : mapeia registro
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - NotaRepositoryAdapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário SQL de persistência de notas | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - NotaRepositoryAdapter</b></size>
 @enduml

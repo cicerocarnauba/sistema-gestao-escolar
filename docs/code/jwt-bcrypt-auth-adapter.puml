@@ -45,5 +45,5 @@ package "JwtBcryptAuthAdapter" as pkg_jwt_bcrypt_auth_adapter {
     JwtBcryptAuthAdapter ..> TokenPayload : assina e decodifica
 }
 
-caption \n<size:15><b>Code View: Sistema de Gestão Escolar - API de Gestão Escolar - JwtBcryptAuthAdapter</b></size>\n<size:11><color:#555555>Detalhes de implementação do adaptador secundário de segurança com JWT e bcrypt | Equipe 5 | UFC Quixadá</color></size>
+caption \n<size:15><b>Code View: Sistema de Gestão Escolar - JwtBcryptAuthAdapter</b></size>
 @enduml
