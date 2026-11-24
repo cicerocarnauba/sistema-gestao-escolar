@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.adapters.inbound.http.auth" {
+package "AuthController" as pkg_auth_controller {
     interface AutenticarUsuarioPort {
         + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
     }

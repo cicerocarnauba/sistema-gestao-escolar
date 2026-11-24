@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.academico" {
+package "Gestão Acadêmica Core" as pkg_gestao_academica_core {
     interface CadastrarUsuarioPort {
         + executar(input: CadastrarUsuarioInput) : Promise<Usuario>
     }

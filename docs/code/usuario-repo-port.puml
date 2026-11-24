@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.ports.out.usuario" {
+package "UsuarioRepoPort" as pkg_usuario_repo_port {
     interface UsuarioRepoPort {
         + salvar(usuario: Usuario) : Promise<void>
         + buscarPorId(id: string) : Promise<Usuario | null>

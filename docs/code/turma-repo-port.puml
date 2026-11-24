@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.ports.out.turma" {
+package "TurmaRepoPort" as pkg_turma_repo_port {
     interface TurmaRepoPort {
         + salvar(turma: Turma) : Promise<void>
         + buscarPorId(id: string) : Promise<Turma | null>

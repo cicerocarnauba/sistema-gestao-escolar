@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.security" {
+package "Security & Auth Core" as pkg_security_auth_core {
     interface AutenticarUsuarioPort {
         + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
     }

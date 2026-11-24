@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.avaliacao" {
+package "Avaliação e Notas Core" as pkg_avaliacao_notas_core {
     interface LancarNotaPort {
         + executar(input: LancarNotaInput) : Promise<Nota>
     }

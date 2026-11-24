@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.adapters.inbound.http.avaliacao" {
+package "AvaliacaoController" as pkg_avaliacao_controller {
     interface LancarNotaPort {
         + executar(input: LancarNotaInput) : Promise<Nota>
     }

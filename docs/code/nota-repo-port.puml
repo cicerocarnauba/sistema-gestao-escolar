@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.ports.out.nota" {
+package "NotaRepoPort" as pkg_nota_repo_port {
     interface NotaRepoPort {
         + salvar(nota: Nota) : Promise<void>
         + atualizar(nota: Nota) : Promise<void>

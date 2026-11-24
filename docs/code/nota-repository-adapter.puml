@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.adapters.outbound.persistence.nota" {
+package "NotaRepositoryAdapter" as pkg_nota_repository_adapter {
     interface NotaRepoPort {
         + salvar(nota: Nota) : Promise<void>
         + atualizar(nota: Nota) : Promise<void>

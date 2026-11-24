@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.adapters.outbound.persistence.usuario" {
+package "UsuarioRepositoryAdapter" as pkg_usuario_repository_adapter {
     interface UsuarioRepoPort {
         + salvar(usuario: Usuario) : Promise<void>
         + buscarPorId(id: string) : Promise<Usuario | null>

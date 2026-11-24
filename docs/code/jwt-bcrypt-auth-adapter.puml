@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.adapters.outbound.auth" {
+package "JwtBcryptAuthAdapter" as pkg_jwt_bcrypt_auth_adapter {
     interface AuthServicePort {
         + gerarHashSenha(senhaPura: string) : Promise<string>
         + compararSenha(senhaPura: string, senhaHash: string) : Promise<boolean>

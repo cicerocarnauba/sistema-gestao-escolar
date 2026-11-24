@@ -18,7 +18,7 @@ skinparam arrowFontColor #222222
 skinparam noteBackgroundColor #FAFAFA
 skinparam noteBorderColor #666666
 
-package "sge.api.core.ports.out.security" {
+package "AuthServicePort" as pkg_auth_service_port {
     interface AuthServicePort {
         + gerarHashSenha(senhaPura: string) : Promise<string>
         + compararSenha(senhaPura: string, senhaHash: string) : Promise<boolean>
