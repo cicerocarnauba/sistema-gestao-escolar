@@ -31,7 +31,9 @@ package "UsuarioRepoPort" as pkg_usuario_repo_port {
         - nome : string
         - email : string
         - documento : string
+        - senhaHash : string
         - perfil : Perfil
+        + possuiPerfil(perfil: Perfil) : boolean
     }
 
     class Aluno extends Usuario {

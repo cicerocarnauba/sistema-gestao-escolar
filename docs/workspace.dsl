@@ -18,7 +18,7 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
 
                 # Faixas 2 e 3: Núcleo Hexagonal (Casos de Uso, Domínio e Portas)
                 group "Núcleo Hexagonal (Casos de Uso, Domínio e Portas)" {
-                    securityComponent = component "Security & Auth Core" "Porta AutenticarUsuarioPort; valida credenciais e perfil de acesso com a entidade Usuario." "Input Port / Use Case" "Core"
+                    securityComponent = component "Security & Auth Core" "Portas AutenticarUsuarioPort e ValidarTokenPort; valida credenciais, token e perfil de acesso com a entidade Usuario." "Input Ports / Use Cases" "Core"
                     academicoCore = component "Gestão Acadêmica Core" "Portas CadastrarUsuarioPort, ListarUsuariosPort, CriarTurmaPort, ConsultarTurmasPort e MatricularAlunoPort; entidades Usuario, Aluno, Professor, Turma e Matricula (RN03)." "Input Ports / Domain" "Core"
                     avaliacaoCore = component "Avaliação e Notas Core" "Portas LancarNotaPort e ConsultarBoletimPort; entidades Nota e Boletim e regras RN01, RN02, RN04 e RN05." "Input Ports / Domain" "Core"
 
@@ -51,7 +51,7 @@ workspace "Sistema de Gestão Escolar" "Arquitetura Hexagonal - Modelo C4 (Equip
         webApp -> avaliacaoController "POST/PUT /notas · GET /boletim" "JSON / HTTPS"
 
         # Driving Adapters -> Core (Input Ports)
-        authController -> securityComponent "Aciona Input Port"
+        authController -> securityComponent "Aciona Input Ports"
         academicoController -> academicoCore "Aciona Input Ports"
         avaliacaoController -> avaliacaoCore "Aciona Input Ports"
 

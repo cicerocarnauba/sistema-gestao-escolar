@@ -23,10 +23,19 @@ package "Security & Auth Core" as pkg_security_auth_core {
         + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
     }
 
+    interface ValidarTokenPort {
+        + executar(token: string) : TokenPayload
+    }
+
     class AutenticarUsuarioUseCase implements AutenticarUsuarioPort {
         - usuarioRepo : UsuarioRepoPort
         - authService : AuthServicePort
         + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
+    }
+
+    class ValidarTokenUseCase implements ValidarTokenPort {
+        - authService : AuthServicePort
+        + executar(token: string) : TokenPayload
     }
 
     class AutenticarUsuarioInput {
@@ -41,9 +50,17 @@ package "Security & Auth Core" as pkg_security_auth_core {
         + perfil : Perfil
     }
 
+    class TokenPayload {
+        + sub : string
+        + email : string
+        + perfil : Perfil
+    }
+
     abstract class Usuario {
         - id : string
+        - nome : string
         - email : string
+        - documento : string
         - senhaHash : string
         - perfil : Perfil
         + possuiPerfil(perfil: Perfil) : boolean
@@ -58,6 +75,8 @@ package "Security & Auth Core" as pkg_security_auth_core {
     AutenticarUsuarioUseCase ..> AutenticarUsuarioInput : recebe
     AutenticarUsuarioUseCase ..> AutenticarUsuarioOutput : produz
     AutenticarUsuarioUseCase ..> Usuario : valida credenciais e perfil
+    ValidarTokenUseCase ..> TokenPayload : decodifica e valida (RF02)
+    TokenPayload --> Perfil : contém
     Usuario --> Perfil : possui
 }
 

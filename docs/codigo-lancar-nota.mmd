@@ -1,23 +1,23 @@
 ---
-title: "Code View: Sistema de Gestão Escolar - API de Gestão Escolar - LancarNotaPort"
+title: "Code View: Sistema de Gestão Escolar - Avaliação e Notas Core (LancarNotaPort)"
 ---
 classDiagram
 direction TB
 
-namespace sge_api_casosdeuso_lancarnota {
-  class LancarNotaService {
+namespace Avaliacao_e_Notas_Core {
+  class LancarNotaUseCase {
     <<use case>>
     -turmaRepo: TurmaRepoPort
     -notaRepo: NotaRepoPort
-    +executar(comando: LancarNotaComando) Promise~Nota~
+    +executar(input: LancarNotaInput) Promise~Nota~
   }
 
   class LancarNotaPort {
     <<interface>>
-    +executar(comando: LancarNotaComando) Promise~Nota~
+    +executar(input: LancarNotaInput) Promise~Nota~
   }
 
-  class LancarNotaComando {
+  class LancarNotaInput {
     <<DTO>>
     +professorId: string
     +alunoId: string
@@ -26,7 +26,7 @@ namespace sge_api_casosdeuso_lancarnota {
   }
 }
 
-namespace sge_api_portas_saida {
+namespace Output_Ports {
   class TurmaRepoPort {
     <<interface>>
     +buscarPorId(id: string) Promise~Turma~
@@ -40,7 +40,7 @@ namespace sge_api_portas_saida {
   }
 }
 
-namespace sge_api_dominio {
+namespace Dominio {
   class Turma {
     <<entity>>
     +professorETitular(professorId: string) boolean
@@ -58,12 +58,12 @@ namespace sge_api_dominio {
   }
 }
 
-LancarNotaService ..|> LancarNotaPort : implementa
-LancarNotaPort ..> LancarNotaComando : recebe
-LancarNotaService --> TurmaRepoPort : busca turma e matrícula
-LancarNotaService --> NotaRepoPort : busca e salva nota
-LancarNotaService ..> Turma : confere titular (RN02)
-LancarNotaService ..> Matricula : exige ativa (RN04)
-LancarNotaService ..> Nota : cria ou altera (RN01)
+LancarNotaUseCase ..|> LancarNotaPort : implementa
+LancarNotaPort ..> LancarNotaInput : recebe
+LancarNotaUseCase --> TurmaRepoPort : busca turma e matrícula
+LancarNotaUseCase --> NotaRepoPort : busca e salva nota
+LancarNotaUseCase ..> Turma : confere titular (RN02)
+LancarNotaUseCase ..> Matricula : exige ativa (RN04)
+LancarNotaUseCase ..> Nota : cria ou altera (RN01)
 
-note for LancarNotaService "1. busca a Turma e confere o professor titular (RN02)\n2. busca a Matricula ativa do aluno (RN04)\n3. cria ou altera a Nota, validando 0 a 10 (RN01)\n4. salva pelo NotaRepoPort"
+note for LancarNotaUseCase "1. busca a Turma e confere o professor titular (RN02)\n2. busca a Matricula ativa do aluno (RN04)\n3. cria ou altera a Nota, validando 0 a 10 (RN01)\n4. salva pelo NotaRepoPort"

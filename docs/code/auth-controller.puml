@@ -23,8 +23,8 @@ package "AuthController" as pkg_auth_controller {
         + executar(input: AutenticarUsuarioInput) : Promise<AutenticarUsuarioOutput>
     }
 
-    interface AuthServicePort {
-        + verificarToken(token: string) : TokenPayload
+    interface ValidarTokenPort {
+        + executar(token: string) : TokenPayload
     }
 
     class AuthController {
@@ -33,7 +33,7 @@ package "AuthController" as pkg_auth_controller {
     }
 
     class AuthMiddleware {
-        - authService : AuthServicePort
+        - validarToken : ValidarTokenPort
         + autenticar(req: Request, res: Response, next: NextFunction) : void
         + exigirPerfis(perfis: Perfil[]) : RequestHandler
     }
@@ -51,7 +51,7 @@ package "AuthController" as pkg_auth_controller {
     AuthController ..> AutenticarUsuarioPort : aciona (RF01)
     AuthController ..> LoginRequestDTO : valida corpo
     AuthController ..> LoginResponseDTO : serializa JSON
-    AuthMiddleware ..> AuthServicePort : valida Bearer JWT (RF02)
+    AuthMiddleware ..> ValidarTokenPort : valida Bearer JWT (RF02)
 }
 
 caption \n<size:15><b>Code View: Sistema de Gestão Escolar - AuthController</b></size>

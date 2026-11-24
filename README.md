@@ -66,7 +66,7 @@ O foco é centralizar o fluxo acadêmico básico entre secretaria, professores e
 A aplicação segue a **Arquitetura Hexagonal (Ports and Adapters)**, isolando as regras acadêmicas de frameworks e do banco de dados.
 
 - **Domínio (núcleo):** entidades e invariantes de negócio (`Aluno`, `Professor`, `Turma`, `Matrícula`, `Nota`), sem dependência de framework web ou driver de banco.
-- **Portas de entrada (Input / Driving Ports):** contratos dos casos de uso (`AutenticarUsuarioPort`, `CadastrarUsuarioPort`, `ListarUsuariosPort`, `CriarTurmaPort`, `ConsultarTurmasPort`, `MatricularAlunoPort`, `LancarNotaPort` e `ConsultarBoletimPort`), acionados por adaptadores primários (Controllers REST).
+- **Portas de entrada (Input / Driving Ports):** contratos dos casos de uso (`AutenticarUsuarioPort`, `ValidarTokenPort`, `CadastrarUsuarioPort`, `ListarUsuariosPort`, `CriarTurmaPort`, `ConsultarTurmasPort`, `MatricularAlunoPort`, `LancarNotaPort` e `ConsultarBoletimPort`), acionados por adaptadores primários (Controllers REST).
 - **Portas de saída (Output / Driven Ports):** interfaces de persistência e autenticação (`AuthServicePort`, `UsuarioRepoPort`, `TurmaRepoPort` e `NotaRepoPort`), implementadas por adaptadores secundários (`JwtBcryptAuthAdapter`, `UsuarioRepositoryAdapter`, `TurmaRepositoryAdapter` e `NotaRepositoryAdapter`).
 
 ### Containers (C4 — nível 2)
