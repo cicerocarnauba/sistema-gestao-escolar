@@ -1,0 +1,141 @@
+.login-split {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--canvas-white);
+}
+
+.login-hero {
+  position: relative;
+  overflow: hidden;
+  background: #0d3ac4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px;
+  color: var(--canvas-white);
+}
+
+.login-hero-waves {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.login-hero-lockup {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: 28px;
+}
+
+.hero-badge-outline {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 3.1rem;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--canvas-white);
+  border: 3px solid var(--canvas-white);
+  border-radius: 22px;
+  padding: 22px 28px;
+}
+
+.hero-divider {
+  width: 2px;
+  height: 108px;
+  background: rgba(255, 255, 255, 0.85);
+}
+
+.hero-system-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1.95rem;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--canvas-white);
+}
+
+.login-panel {
+  background: var(--canvas-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 32px;
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 390px;
+}
+
+.login-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 28px;
+}
+
+.login-brand-label {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--ink-primary);
+}
+
+.login-title {
+  margin: 0 0 32px;
+  font-family: var(--font-display);
+  font-size: 1.85rem;
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+  color: var(--ink-primary);
+}
+
+.login-form-container .alert-banner {
+  margin-bottom: 22px;
+}
+
+.login-form-container .form-field {
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.login-submit {
+  height: 46px;
+  margin-top: 10px;
+}
+
+@media (max-width: 860px) {
+  .login-split {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+  }
+
+  .login-hero {
+    padding: 36px 24px;
+  }
+
+  .hero-badge-outline {
+    font-size: 2rem;
+    padding: 14px 18px;
+    border-radius: 16px;
+  }
+
+  .hero-divider {
+    height: 72px;
+  }
+
+  .hero-system-name {
+    font-size: 1.35rem;
+  }
+
+  .login-panel {
+    padding: 36px 20px;
+    align-items: flex-start;
+  }
+}
