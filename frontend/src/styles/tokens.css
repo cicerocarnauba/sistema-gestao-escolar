@@ -1,0 +1,23 @@
+:root {
+  --cobalt-primary: #1d4ed8;
+  --cobalt-hover: #1e40af;
+  --cobalt-tint: #eff6ff;
+  --cobalt-border: #bfdbfe;
+  --canvas-white: #ffffff;
+  --surface-mist: #f8fafc;
+  --surface-subtle: #f1f5f9;
+  --ink-primary: #0f172a;
+  --ink-secondary: #334155;
+  --ink-muted: #64748b;
+  --line-hairline: #e2e8f0;
+  --line-strong: #cbd5e1;
+  --status-approved: #15803d;
+  --status-approved-bg: #dcfce7;
+  --status-failed: #b91c1c;
+  --status-failed-bg: #fee2e2;
+  --status-progress: #b45309;
+  --status-progress-bg: #fef3c7;
+  --font-display: 'Plus Jakarta Sans', 'Inter', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, monospace;
+}
