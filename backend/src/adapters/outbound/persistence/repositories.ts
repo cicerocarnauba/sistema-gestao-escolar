@@ -9,7 +9,7 @@ import { Nota } from '../../../core/domain/entities/Nota';
 import { DomainError } from '../../../core/domain/errors/DomainError';
 import { DatabaseClient } from './database';
 
-export { SqlUsuarioRepository } from './SqlUsuarioRepository';
+export { UsuarioRepositoryAdapter } from './UsuarioRepositoryAdapter';
 
 export class SqlTurmaRepository implements TurmaRepoPort {
   constructor(private readonly db: DatabaseClient) {}

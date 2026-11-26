@@ -12,19 +12,19 @@ interface UsuarioRow {
   perfil: PerfilUsuario;
 }
 
-function mapRowToUsuario(row: UsuarioRow): Usuario {
-  return new Usuario({
-    id: row.id,
-    nome: row.nome,
-    email: row.email,
-    matricula: row.matricula,
-    senhaHash: row.senha_hash,
-    perfil: row.perfil,
-  });
-}
-
-export class SqlUsuarioRepository implements UsuarioRepoPort {
+export class UsuarioRepositoryAdapter implements UsuarioRepoPort {
   constructor(private readonly db: DatabaseClient) {}
+
+  private mapRowToEntity(row: UsuarioRow): Usuario {
+    return new Usuario({
+      id: row.id,
+      nome: row.nome,
+      email: row.email,
+      matricula: row.matricula,
+      senhaHash: row.senha_hash,
+      perfil: row.perfil,
+    });
+  }
 
   async salvar(usuario: Usuario): Promise<void> {
     if (this.db.driver === 'postgres' && this.db.pgPool) {
@@ -66,7 +66,7 @@ export class SqlUsuarioRepository implements UsuarioRepoPort {
         'SELECT id, nome, email, matricula, senha_hash, perfil FROM usuarios WHERE id = $1 LIMIT 1',
         [id],
       );
-      return rows[0] ? mapRowToUsuario(rows[0]) : null;
+      return rows[0] ? this.mapRowToEntity(rows[0]) : null;
     }
 
     if (this.db.sqlite) {
@@ -75,7 +75,7 @@ export class SqlUsuarioRepository implements UsuarioRepoPort {
           'SELECT id, nome, email, matricula, senha_hash, perfil FROM usuarios WHERE id = ? LIMIT 1',
         )
         .get(id) as UsuarioRow | undefined;
-      return row ? mapRowToUsuario(row) : null;
+      return row ? this.mapRowToEntity(row) : null;
     }
 
     return null;
@@ -93,7 +93,7 @@ export class SqlUsuarioRepository implements UsuarioRepoPort {
          LIMIT 1`,
         [valorLower, valor],
       );
-      return rows[0] ? mapRowToUsuario(rows[0]) : null;
+      return rows[0] ? this.mapRowToEntity(rows[0]) : null;
     }
 
     if (this.db.sqlite) {
@@ -105,7 +105,7 @@ export class SqlUsuarioRepository implements UsuarioRepoPort {
            LIMIT 1`,
         )
         .get(valorLower, valor) as UsuarioRow | undefined;
-      return row ? mapRowToUsuario(row) : null;
+      return row ? this.mapRowToEntity(row) : null;
     }
 
     return null;
@@ -113,6 +113,9 @@ export class SqlUsuarioRepository implements UsuarioRepoPort {
 
   async listar(_perfil?: PerfilUsuario): Promise<Usuario[]> {
     void this.db;
-    throw new DomainError('SqlUsuarioRepository.listar pendente de implementação.', 'NOT_IMPLEMENTED');
+    throw new DomainError(
+      'UsuarioRepositoryAdapter.listar pendente de implementação.',
+      'NOT_IMPLEMENTED',
+    );
   }
 }

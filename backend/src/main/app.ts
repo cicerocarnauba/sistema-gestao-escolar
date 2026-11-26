@@ -5,9 +5,9 @@ import {
   SqlMatriculaRepository,
   SqlNotaRepository,
   SqlTurmaRepository,
-  SqlUsuarioRepository,
+  UsuarioRepositoryAdapter,
 } from '../adapters/outbound/persistence/repositories';
-import { JwtAuthService } from '../adapters/outbound/auth/JwtAuthService';
+import { JwtBcryptAuthAdapter } from '../adapters/outbound/auth/JwtBcryptAuthAdapter';
 import {
   AutenticarUsuarioUseCase,
   CadastrarUsuarioUseCase,
@@ -28,8 +28,8 @@ export async function criarAplicacao(): Promise<{ app: Express; db: DatabaseClie
   await db.initSchema();
 
   // Adaptadores de Saída (Driven Adapters)
-  const authService = new JwtAuthService();
-  const usuarioRepo = new SqlUsuarioRepository(db);
+  const authService = new JwtBcryptAuthAdapter();
+  const usuarioRepo = new UsuarioRepositoryAdapter(db);
   const turmaRepo = new SqlTurmaRepository(db);
   const matriculaRepo = new SqlMatriculaRepository(db);
   const notaRepo = new SqlNotaRepository(db);

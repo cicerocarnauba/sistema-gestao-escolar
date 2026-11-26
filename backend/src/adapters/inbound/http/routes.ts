@@ -10,7 +10,7 @@ import {
   MatricularAlunoPort,
   ValidarTokenPort,
 } from '../../../core/ports/in';
-import { criarAuthMiddleware } from './authMiddleware';
+import { AuthMiddleware } from './AuthMiddleware';
 import { AuthController } from './AuthController';
 import { PerfilUsuario } from '../../../core/domain/entities/Usuario';
 
@@ -28,7 +28,8 @@ export interface HttpDependencies {
 
 export function criarRotasApi(deps: HttpDependencies): Router {
   const router = Router();
-  const { autenticar, exigirPerfis } = criarAuthMiddleware(deps.validarToken);
+  const authMiddleware = new AuthMiddleware(deps.validarToken);
+  const { autenticar, exigirPerfis } = authMiddleware;
   const authController = new AuthController(deps.autenticarUsuario);
 
   // RF01 — POST /auth/login
