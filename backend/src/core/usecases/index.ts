@@ -1,8 +1,5 @@
 import { DomainError } from '../domain/errors/DomainError';
 import {
-  AutenticarUsuarioInput,
-  AutenticarUsuarioOutput,
-  AutenticarUsuarioPort,
   CadastrarUsuarioInput,
   CadastrarUsuarioPort,
   ConsultarBoletimPort,
@@ -30,18 +27,8 @@ import {
 } from '../ports/out';
 import { PerfilUsuario } from '../domain/entities/Usuario';
 
-export class AutenticarUsuarioUseCase implements AutenticarUsuarioPort {
-  constructor(
-    private readonly usuarioRepo: UsuarioRepoPort,
-    private readonly authService: AuthServicePort,
-  ) {}
-
-  async executar(_input: AutenticarUsuarioInput): Promise<AutenticarUsuarioOutput> {
-    void this.usuarioRepo;
-    void this.authService;
-    throw new DomainError('RF01 (AutenticarUsuarioUseCase) pendente de implementação (#14).', 'NOT_IMPLEMENTED');
-  }
-}
+export { AutenticarUsuarioUseCase } from './AutenticarUsuarioUseCase';
+export { ValidarTokenUseCase } from './ValidarTokenUseCase';
 
 export class CadastrarUsuarioUseCase implements CadastrarUsuarioPort {
   constructor(

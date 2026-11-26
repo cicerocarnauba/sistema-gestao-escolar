@@ -37,6 +37,10 @@ export class Usuario {
     this.senhaHash = props.senhaHash;
     this.perfil = props.perfil;
   }
+
+  public possuiPerfil(perfil: PerfilUsuario): boolean {
+    return this.perfil === perfil;
+  }
 }
 
 export class Aluno extends Usuario {

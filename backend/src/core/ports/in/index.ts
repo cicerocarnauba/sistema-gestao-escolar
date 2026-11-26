@@ -1,5 +1,6 @@
 import { PerfilUsuario } from '../../domain/entities/Usuario';
 import { SituacaoAcademica } from '../../domain/entities/Nota';
+import { TokenPayload } from '../out';
 
 // RF01 — Autenticação de Usuário
 export interface AutenticarUsuarioInput {
@@ -20,6 +21,11 @@ export interface AutenticarUsuarioOutput {
 
 export interface AutenticarUsuarioPort {
   executar(input: AutenticarUsuarioInput): Promise<AutenticarUsuarioOutput>;
+}
+
+// RF02 — Validação de Token JWT
+export interface ValidarTokenPort {
+  executar(token: string): TokenPayload;
 }
 
 // RF03 & RF06 — Cadastro e Listagem de Usuários

@@ -17,7 +17,9 @@ import {
   LancarNotaUseCase,
   ListarUsuariosUseCase,
   MatricularAlunoUseCase,
+  ValidarTokenUseCase,
 } from '../core/usecases';
+import { garantirUsuariosIniciaisDev } from '../adapters/outbound/persistence/seed';
 import { criarRotasApi } from '../adapters/inbound/http/routes';
 import { errorHandler } from '../adapters/inbound/http/errorHandler';
 
@@ -32,8 +34,11 @@ export async function criarAplicacao(): Promise<{ app: Express; db: DatabaseClie
   const matriculaRepo = new SqlMatriculaRepository(db);
   const notaRepo = new SqlNotaRepository(db);
 
+  await garantirUsuariosIniciaisDev(usuarioRepo, authService);
+
   // Casos de Uso do Núcleo (conectados apenas às Portas)
   const autenticarUsuario = new AutenticarUsuarioUseCase(usuarioRepo, authService);
+  const validarToken = new ValidarTokenUseCase(authService);
   const cadastrarUsuario = new CadastrarUsuarioUseCase(usuarioRepo, authService);
   const listarUsuarios = new ListarUsuariosUseCase(usuarioRepo);
   const criarTurma = new CriarTurmaUseCase(turmaRepo, usuarioRepo);
@@ -58,7 +63,7 @@ export async function criarAplicacao(): Promise<{ app: Express; db: DatabaseClie
 
   app.use(
     criarRotasApi({
-      authService,
+      validarToken,
       autenticarUsuario,
       cadastrarUsuario,
       listarUsuarios,

@@ -8,13 +8,14 @@ import {
   LancarNotaPort,
   ListarUsuariosPort,
   MatricularAlunoPort,
+  ValidarTokenPort,
 } from '../../../core/ports/in';
-import { AuthServicePort } from '../../../core/ports/out';
 import { criarAuthMiddleware } from './authMiddleware';
+import { AuthController } from './AuthController';
 import { PerfilUsuario } from '../../../core/domain/entities/Usuario';
 
 export interface HttpDependencies {
-  authService: AuthServicePort;
+  validarToken: ValidarTokenPort;
   autenticarUsuario: AutenticarUsuarioPort;
   cadastrarUsuario: CadastrarUsuarioPort;
   listarUsuarios: ListarUsuariosPort;
@@ -27,17 +28,11 @@ export interface HttpDependencies {
 
 export function criarRotasApi(deps: HttpDependencies): Router {
   const router = Router();
-  const { autenticar, exigirPerfis } = criarAuthMiddleware(deps.authService);
+  const { autenticar, exigirPerfis } = criarAuthMiddleware(deps.validarToken);
+  const authController = new AuthController(deps.autenticarUsuario);
 
   // RF01 — POST /auth/login
-  router.post('/auth/login', async (req, res, next) => {
-    try {
-      const resultado = await deps.autenticarUsuario.executar(req.body);
-      res.status(200).json(resultado);
-    } catch (err) {
-      next(err);
-    }
-  });
+  router.post('/auth/login', authController.login);
 
   // RF03 & RF06 — POST /usuarios | GET /usuarios
   router.post('/usuarios', autenticar, exigirPerfis('ADMIN'), async (req, res, next) => {

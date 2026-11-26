@@ -2,38 +2,14 @@ import {
   MatriculaRepoPort,
   NotaRepoPort,
   TurmaRepoPort,
-  UsuarioRepoPort,
 } from '../../../core/ports/out';
-import { PerfilUsuario, Usuario } from '../../../core/domain/entities/Usuario';
 import { Turma } from '../../../core/domain/entities/Turma';
 import { Matricula } from '../../../core/domain/entities/Matricula';
 import { Nota } from '../../../core/domain/entities/Nota';
 import { DomainError } from '../../../core/domain/errors/DomainError';
 import { DatabaseClient } from './database';
 
-export class SqlUsuarioRepository implements UsuarioRepoPort {
-  constructor(private readonly db: DatabaseClient) {}
-
-  async salvar(_usuario: Usuario): Promise<void> {
-    void this.db;
-    throw new DomainError('SqlUsuarioRepository.salvar pendente de implementação.', 'NOT_IMPLEMENTED');
-  }
-
-  async buscarPorId(_id: string): Promise<Usuario | null> {
-    void this.db;
-    throw new DomainError('SqlUsuarioRepository.buscarPorId pendente de implementação.', 'NOT_IMPLEMENTED');
-  }
-
-  async buscarPorEmailOuMatricula(_identificador: string): Promise<Usuario | null> {
-    void this.db;
-    throw new DomainError('SqlUsuarioRepository.buscarPorEmailOuMatricula pendente de implementação.', 'NOT_IMPLEMENTED');
-  }
-
-  async listar(_perfil?: PerfilUsuario): Promise<Usuario[]> {
-    void this.db;
-    throw new DomainError('SqlUsuarioRepository.listar pendente de implementação.', 'NOT_IMPLEMENTED');
-  }
-}
+export { SqlUsuarioRepository } from './SqlUsuarioRepository';
 
 export class SqlTurmaRepository implements TurmaRepoPort {
   constructor(private readonly db: DatabaseClient) {}

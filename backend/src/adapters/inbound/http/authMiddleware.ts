@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { PerfilUsuario } from '../../../core/domain/entities/Usuario';
-import { AuthServicePort, TokenPayload } from '../../../core/ports/out';
+import { ValidarTokenPort } from '../../../core/ports/in';
+import { TokenPayload } from '../../../core/ports/out';
 import { DomainError } from '../../../core/domain/errors/DomainError';
 
 declare global {
@@ -12,10 +13,9 @@ declare global {
 }
 
 /**
- * Base para RF02 (Autorização por perfil / RBAC — Issue #23).
- * Decodifica o token Bearer e valida os papéis permitidos na rota.
+ * Middleware de autenticação Bearer JWT e controle de acesso por perfil (RF02).
  */
-export function criarAuthMiddleware(authService: AuthServicePort) {
+export function criarAuthMiddleware(validarToken: ValidarTokenPort) {
   return {
     autenticar(req: Request, _res: Response, next: NextFunction): void {
       const header = req.headers.authorization;
@@ -25,7 +25,7 @@ export function criarAuthMiddleware(authService: AuthServicePort) {
       }
       const token = header.slice('Bearer '.length).trim();
       try {
-        req.usuario = authService.verificarToken(token);
+        req.usuario = validarToken.executar(token);
         next();
       } catch (err) {
         next(err);
